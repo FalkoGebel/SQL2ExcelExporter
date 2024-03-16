@@ -1,1 +1,2 @@
-# Sql2ExcelExporter
+# SQL 2 Excel Exporter
+- work in progress
