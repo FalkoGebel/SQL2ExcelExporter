@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.9.34701.34
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExporterLogicLibrary", "ExporterLogicLibrary\ExporterLogicLibrary.csproj", "{BC227937-15D1-49B4-86CA-806ACC71A8DB}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{BC227937-15D1-49B4-86CA-806ACC71A8DB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BC227937-15D1-49B4-86CA-806ACC71A8DB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BC227937-15D1-49B4-86CA-806ACC71A8DB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BC227937-15D1-49B4-86CA-806ACC71A8DB}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {2A997115-2224-4DF7-9620-C5C724D277F9}
+	EndGlobalSection
+EndGlobal
