@@ -90,5 +90,45 @@ namespace ExporterLogicTests
             List<string> tables = SqlLogic.GetTablesForDatabase(_serverFromFile, "master");
             tables.Should().BeEquivalentTo(expected);
         }
+
+        [TestMethod]
+        public void CallGetColumnsWithoutServerAndException()
+        {
+            Action act = () => SqlLogic.GetColumnsForTable("", "", "t");
+
+            act.Should().Throw<ArgumentException>().WithMessage("No server specified");
+        }
+
+        [TestMethod]
+        public void CallGetColumnsWithoutDatabaseAndException()
+        {
+            Action act = () => SqlLogic.GetColumnsForTable(_serverFromFile, "", "t");
+
+            act.Should().Throw<ArgumentException>().WithMessage("No database specified");
+        }
+
+        [TestMethod]
+        public void CallGetColumnsWithoutTableAndException()
+        {
+            Action act = () => SqlLogic.GetColumnsForTable(_serverFromFile, "master", "");
+
+            act.Should().Throw<ArgumentException>().WithMessage("No table specified");
+        }
+
+        [TestMethod]
+        public void CallGetColumnsForSptMonitorTableInMasterDBAndGetCorrectNumberOfColumns()
+        {
+            List<string> columns = SqlLogic.GetColumnsForTable(_serverFromFile, "master", "spt_monitor");
+            columns.Count.Should().Be(11);
+        }
+
+        [TestMethod]
+        public void CallGetColumnsForSptMonitorTableInMasterDBAndGetColumns()
+        {
+            List<string> expected = ["lastrun", "cpu_busy", "io_busy", "idle", "pack_received", "pack_sent", "connections",
+                "pack_errors", "total_read", "total_write", "total_errors"];
+            List<string> columns = SqlLogic.GetColumnsForTable(_serverFromFile, "master", "spt_monitor");
+            columns.Should().BeEquivalentTo(expected);
+        }
     }
 }

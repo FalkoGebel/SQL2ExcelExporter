@@ -5,6 +5,21 @@ namespace ExporterLogicLibrary
 {
     public static class SqlLogic
     {
+        public static List<string> GetColumnsForTable(string server, string database, string table)
+        {
+            if (table == string.Empty)
+                throw new ArgumentException(Properties.Resources.EXCEPTION_TABLE_MISSING);
+
+            List<string> output;
+
+            using (SqlConnection cnn = GetOpenConnection(server, database))
+            {
+                output = cnn.Query<string>($"SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = '{table}';").AsList();
+            }
+
+            return output;
+        }
+
         public static List<string> GetDatabasesFromServer(string server)
         {
             List<string> output;
