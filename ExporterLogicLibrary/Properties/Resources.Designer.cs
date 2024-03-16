@@ -61,20 +61,29 @@ namespace ExporterLogicLibrary.Properties {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die No database specified ähnelt.
+        /// </summary>
+        public static string EXCEPTION_DATABASE_MISSING {
+            get {
+                return ResourceManager.GetString("EXCEPTION_DATABASE_MISSING", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die No worksheet name specified ähnelt.
         /// </summary>
-        public static string ERR_MISSING_SHEET_NAME {
+        public static string EXCEPTION_MISSING_SHEET_NAME {
             get {
-                return ResourceManager.GetString("ERR_MISSING_SHEET_NAME", resourceCulture);
+                return ResourceManager.GetString("EXCEPTION_MISSING_SHEET_NAME", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die No server specified ähnelt.
         /// </summary>
-        public static string EXP_SERVER_MISSING {
+        public static string EXCEPTION_SERVER_MISSING {
             get {
-                return ResourceManager.GetString("EXP_SERVER_MISSING", resourceCulture);
+                return ResourceManager.GetString("EXCEPTION_SERVER_MISSING", resourceCulture);
             }
         }
         

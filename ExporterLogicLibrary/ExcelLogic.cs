@@ -29,7 +29,7 @@ namespace ExporterLogicLibrary
         public static void InsertWorksheet(this SpreadsheetDocument s, string sheetName)
         {
             if (sheetName == "")
-                throw new ArgumentException(Properties.Resources.ERR_MISSING_SHEET_NAME);
+                throw new ArgumentException(Properties.Resources.EXCEPTION_MISSING_SHEET_NAME);
 
             WorkbookPart workbookPart = s.WorkbookPart ?? s.AddWorkbookPart();
             WorksheetPart newWorksheetPart = workbookPart.AddNewPart<WorksheetPart>();

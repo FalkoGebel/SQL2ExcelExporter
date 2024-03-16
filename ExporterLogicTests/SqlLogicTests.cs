@@ -51,5 +51,44 @@ namespace ExporterLogicTests
             databases.Should().Contain("model");
             databases.Should().Contain("msdb");
         }
+
+        [TestMethod]
+        public void CallGetTablesWithoutServerAndException()
+        {
+            Action act = () => SqlLogic.GetTablesForDatabase("", "");
+
+            act.Should().Throw<ArgumentException>().WithMessage("No server specified");
+        }
+
+        [TestMethod]
+        public void CallGetTablesWithoutDatabaseAndException()
+        {
+            Action act = () => SqlLogic.GetTablesForDatabase(_serverFromFile, "");
+
+            act.Should().Throw<ArgumentException>().WithMessage("No database specified");
+        }
+
+        [TestMethod]
+        public void CallGetTablesWithInvalidDatabaseAndException()
+        {
+            Action act = () => SqlLogic.GetTablesForDatabase(_serverFromFile, "INVALID_DB");
+
+            act.Should().Throw<SqlException>().WithMessage("*INVALID_DB*");
+        }
+
+        [TestMethod]
+        public void CallGetTablesForMasterDBAndGetCorrectNumberOfTables()
+        {
+            List<string> tables = SqlLogic.GetTablesForDatabase(_serverFromFile, "master");
+            tables.Count.Should().Be(5);
+        }
+
+        [TestMethod]
+        public void CallGetTablesForMasterDBAndGetCorrectTables()
+        {
+            List<string> expected = ["spt_fallback_db", "spt_fallback_dev", "spt_fallback_usg", "spt_monitor", "MSreplication_options"];
+            List<string> tables = SqlLogic.GetTablesForDatabase(_serverFromFile, "master");
+            tables.Should().BeEquivalentTo(expected);
+        }
     }
 }

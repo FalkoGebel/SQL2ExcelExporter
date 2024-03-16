@@ -117,10 +117,13 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="ERR_MISSING_SHEET_NAME" xml:space="preserve">
+  <data name="EXCEPTION_DATABASE_MISSING" xml:space="preserve">
+    <value>No database specified</value>
+  </data>
+  <data name="EXCEPTION_MISSING_SHEET_NAME" xml:space="preserve">
     <value>No worksheet name specified</value>
   </data>
-  <data name="EXP_SERVER_MISSING" xml:space="preserve">
+  <data name="EXCEPTION_SERVER_MISSING" xml:space="preserve">
     <value>No server specified</value>
   </data>
   <data name="STANDARD_SHEET_NAME" xml:space="preserve">

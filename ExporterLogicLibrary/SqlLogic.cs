@@ -11,18 +11,33 @@ namespace ExporterLogicLibrary
 
             using (SqlConnection cnn = GetOpenConnection(server))
             {
-                output = cnn.Query<string>("SELECT name FROM sys.databases").AsList();
+                output = cnn.Query<string>("SELECT name FROM sys.databases;").AsList();
             }
 
             return output;
         }
 
-        private static SqlConnection GetOpenConnection(string server)
+        public static List<string> GetTablesForDatabase(string server, string database)
+        {
+            List<string> output;
+
+            using (SqlConnection cnn = GetOpenConnection(server, database))
+            {
+                output = cnn.Query<string>("SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE';").AsList();
+            }
+
+            return output;
+        }
+
+        private static SqlConnection GetOpenConnection(string server, string? database = null)
         {
             if (server == string.Empty)
-                throw new ArgumentException(Properties.Resources.EXP_SERVER_MISSING);
+                throw new ArgumentException(Properties.Resources.EXCEPTION_SERVER_MISSING);
 
-            string connectionString = $@"Data Source={server};Integrated Security=SSPI;TrustServerCertificate=true;";
+            if (database == string.Empty)
+                throw new ArgumentException(Properties.Resources.EXCEPTION_DATABASE_MISSING);
+
+            string connectionString = $@"Data Source={server};{(database != null ? $"Initial Catalog={database};" : "")}Integrated Security=SSPI;TrustServerCertificate=true;";
 
             SqlConnection cnn = new(connectionString);
             cnn.Open();
