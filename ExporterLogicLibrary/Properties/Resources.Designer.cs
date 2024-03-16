@@ -88,6 +88,15 @@ namespace ExporterLogicLibrary.Properties {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die No table specified ähnelt.
+        /// </summary>
+        public static string EXCEPTION_TABLE_MISSING {
+            get {
+                return ResourceManager.GetString("EXCEPTION_TABLE_MISSING", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Sheet ähnelt.
         /// </summary>
         public static string STANDARD_SHEET_NAME {

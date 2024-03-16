@@ -126,6 +126,9 @@
   <data name="EXCEPTION_SERVER_MISSING" xml:space="preserve">
     <value>No server specified</value>
   </data>
+  <data name="EXCEPTION_TABLE_MISSING" xml:space="preserve">
+    <value>No table specified</value>
+  </data>
   <data name="STANDARD_SHEET_NAME" xml:space="preserve">
     <value>Sheet</value>
   </data>
