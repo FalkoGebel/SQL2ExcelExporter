@@ -1,4 +1,5 @@
 ﻿using ExporterLogicLibrary;
+using ExporterLogicLibrary.Models;
 using FluentAssertions;
 using Microsoft.Data.SqlClient;
 
@@ -118,17 +119,88 @@ namespace ExporterLogicTests
         [TestMethod]
         public void CallGetColumnsForSptMonitorTableInMasterDBAndGetCorrectNumberOfColumns()
         {
-            List<string> columns = SqlLogic.GetColumnsForTable(_serverFromFile, "master", "spt_monitor");
+            List<ColumnModel> columns = SqlLogic.GetColumnsForTable(_serverFromFile, "master", "spt_monitor");
             columns.Count.Should().Be(11);
         }
 
         [TestMethod]
         public void CallGetColumnsForSptMonitorTableInMasterDBAndGetColumns()
         {
-            List<string> expected = ["lastrun", "cpu_busy", "io_busy", "idle", "pack_received", "pack_sent", "connections",
-                "pack_errors", "total_read", "total_write", "total_errors"];
-            List<string> columns = SqlLogic.GetColumnsForTable(_serverFromFile, "master", "spt_monitor");
+            List<ColumnModel> expected = [
+                new ColumnModel() {Name = "lastrun", Type = "datetime"},
+                new ColumnModel() {Name = "cpu_busy", Type = "int"},
+                new ColumnModel() {Name = "io_busy", Type = "int"},
+                new ColumnModel() {Name = "idle", Type = "int"},
+                new ColumnModel() {Name = "pack_received", Type = "int"},
+                new ColumnModel() {Name = "pack_sent", Type = "int"},
+                new ColumnModel() {Name = "connections", Type = "int"},
+                new ColumnModel() {Name = "pack_errors", Type = "int"},
+                new ColumnModel() {Name = "total_read", Type = "int"},
+                new ColumnModel() {Name = "total_write", Type = "int"},
+                new ColumnModel() {Name = "total_errors", Type = "int"}
+            ];
+
+            List<ColumnModel> columns = SqlLogic.GetColumnsForTable(_serverFromFile, "master", "spt_monitor");
             columns.Should().BeEquivalentTo(expected);
+        }
+
+        [TestMethod]
+        public void CallGetContentForMSreplication_optionsTableInMasterDBAndGetCorrectNumberOfEntries()
+        {
+            List<List<string>> lines = SqlLogic.GetContentForTable(_serverFromFile, "master", "MSreplication_options");
+            lines.Count.Should().Be(3);
+        }
+
+        [TestMethod]
+        public void CallGetContentForCompanyTableInDemoDatabaseNAV_11_0_DBAndGetCorrectNumberOfEntries()
+        {
+            List<List<string>> lines = SqlLogic.GetContentForTable(_serverFromFile, "Demo Database NAV (11-0)", "Company");
+            lines.Count.Should().Be(1);
+        }
+
+        [TestMethod]
+        public void CallGetContentForMSreplication_optionsTableInMasterDBAndGetCorrectValues()
+        {
+            List<List<string>> expected = [
+                ["transactional", "True", "90", "0", "0", "0"],
+                ["merge", "True", "90", "0", "0", "0"],
+                ["security_model", "True", "90", "0", "0", "0"]
+            ];
+
+            List<List<string>> lines = SqlLogic.GetContentForTable(_serverFromFile, "master", "MSreplication_options");
+            lines.Should().BeEquivalentTo(expected);
+        }
+
+        [TestMethod]
+        public void CallGetContentForMSreplication_optionsTableInMasterDBWithSubsetOfColumnsAndGetCorrectValues()
+        {
+            List<string> columns = ["optname", "value", "major_version", "install_failures"];
+
+            List<List<string>> expected = [
+                ["transactional", "True", "90", "0"],
+                ["merge", "True", "90", "0"],
+                ["security_model", "True", "90", "0"]
+            ];
+
+            List<List<string>> lines = SqlLogic.GetContentForTable(_serverFromFile, "master", "MSreplication_options",
+                columns);
+            lines.Should().BeEquivalentTo(expected);
+        }
+
+        [TestMethod]
+        public void CallGetContentForMSreplication_optionsTableInMasterDBWithColumsListAndGetCorrectValues()
+        {
+            List<List<string>> expected = [
+                ["transactional", "True", "90", "0", "0", "0"],
+                ["merge", "True", "90", "0", "0", "0"],
+                ["security_model", "True", "90", "0", "0", "0"]
+            ];
+
+            List<ColumnModel> columns = SqlLogic.GetColumnsForTable(_serverFromFile, "master", "MSreplication_options");
+
+            List<List<string>> lines = SqlLogic.GetContentForTable(_serverFromFile, "master", "MSreplication_options",
+                columns.Select(c => c.Name).ToList());
+            lines.Should().BeEquivalentTo(expected);
         }
     }
 }
