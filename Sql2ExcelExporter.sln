@@ -3,14 +3,16 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.9.34701.34
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExporterLogicLibrary", "ExporterLogicLibrary\ExporterLogicLibrary.csproj", "{BC227937-15D1-49B4-86CA-806ACC71A8DB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ExporterLogicLibrary", "ExporterLogicLibrary\ExporterLogicLibrary.csproj", "{BC227937-15D1-49B4-86CA-806ACC71A8DB}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Projektmappenelemente", "Projektmappenelemente", "{C1816288-C580-414C-B5CF-852F48C94163}"
 	ProjectSection(SolutionItems) = preProject
 		README.md = README.md
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExporterLogicTests", "ExporterLogicTests\ExporterLogicTests.csproj", "{192CE36D-9244-4FEA-9313-9A25420185E0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ExporterLogicTests", "ExporterLogicTests\ExporterLogicTests.csproj", "{192CE36D-9244-4FEA-9313-9A25420185E0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sql2ExcelExporterUI", "Sql2ExcelExporterUI\Sql2ExcelExporterUI.csproj", "{C2EB46E5-4B4E-44E9-98A5-EC5E76D77890}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -26,6 +28,10 @@ Global
 		{192CE36D-9244-4FEA-9313-9A25420185E0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{192CE36D-9244-4FEA-9313-9A25420185E0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{192CE36D-9244-4FEA-9313-9A25420185E0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C2EB46E5-4B4E-44E9-98A5-EC5E76D77890}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C2EB46E5-4B4E-44E9-98A5-EC5E76D77890}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C2EB46E5-4B4E-44E9-98A5-EC5E76D77890}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C2EB46E5-4B4E-44E9-98A5-EC5E76D77890}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

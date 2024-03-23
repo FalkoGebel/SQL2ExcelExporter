@@ -1,0 +1,21 @@
+﻿<Window x:Class="Sql2ExcelExporterUI.DatabaseChoiceWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:p="clr-namespace:Sql2ExcelExporterUI.Properties"
+        xmlns:local="clr-namespace:Sql2ExcelExporterUI"
+        mc:Ignorable="d"
+        Title="{x:Static p:Resources.DBCW_TITLE}" Height="400" Width="300" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" WindowStyle="ToolWindow">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="40"/>
+        </Grid.RowDefinitions>
+        <ListView x:Name="DatabasesListView" Grid.Row="0" Grid.Column="0"/>
+        <StackPanel Grid.Row="1" Grid.Column="0" HorizontalAlignment="Right" Orientation="Horizontal" Margin="5,0,5,0">
+            <Button x:Name="OkButton" Content="{x:Static p:Resources.DBCW_OK_BUTTON_CONTENT}" Margin="0,5,10,5" Padding="5" IsDefault="True" Click="OkButton_Click"></Button>
+            <Button x:Name="CancelButton" Content="{x:Static p:Resources.DBCW_CANCEL_BUTTON_CONTENT}" Margin="0,5,10,5" Padding="5" IsCancel="True"></Button>
+        </StackPanel>
+    </Grid>
+</Window>
