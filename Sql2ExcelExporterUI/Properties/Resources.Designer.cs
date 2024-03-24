@@ -63,18 +63,18 @@ namespace Sql2ExcelExporterUI.Properties {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Cancel ähnelt.
         /// </summary>
-        public static string DBCW_CANCEL_BUTTON_CONTENT {
+        public static string CW_CANCEL_BUTTON_CONTENT {
             get {
-                return ResourceManager.GetString("DBCW_CANCEL_BUTTON_CONTENT", resourceCulture);
+                return ResourceManager.GetString("CW_CANCEL_BUTTON_CONTENT", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die OK ähnelt.
         /// </summary>
-        public static string DBCW_OK_BUTTON_CONTENT {
+        public static string CW_OK_BUTTON_CONTENT {
             get {
-                return ResourceManager.GetString("DBCW_OK_BUTTON_CONTENT", resourceCulture);
+                return ResourceManager.GetString("CW_OK_BUTTON_CONTENT", resourceCulture);
             }
         }
         
@@ -106,11 +106,47 @@ namespace Sql2ExcelExporterUI.Properties {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Columns: ähnelt.
+        /// </summary>
+        public static string MW_COLUMNS_LABEL {
+            get {
+                return ResourceManager.GetString("MW_COLUMNS_LABEL", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Database: ähnelt.
         /// </summary>
         public static string MW_DATABASE_LABEL {
             get {
                 return ResourceManager.GetString("MW_DATABASE_LABEL", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Directory: ähnelt.
+        /// </summary>
+        public static string MW_DIRECTORY_LABEL {
+            get {
+                return ResourceManager.GetString("MW_DIRECTORY_LABEL", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Select All ähnelt.
+        /// </summary>
+        public static string MW_SELECT_ALL_TABLES_BUTTON_CONTENT {
+            get {
+                return ResourceManager.GetString("MW_SELECT_ALL_TABLES_BUTTON_CONTENT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Select None ähnelt.
+        /// </summary>
+        public static string MW_SELECT_NONE_TABLES_BUTTON_CONTENT {
+            get {
+                return ResourceManager.GetString("MW_SELECT_NONE_TABLES_BUTTON_CONTENT", resourceCulture);
             }
         }
         
@@ -124,11 +160,56 @@ namespace Sql2ExcelExporterUI.Properties {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Table: ähnelt.
+        /// </summary>
+        public static string MW_TABLE_LABEL {
+            get {
+                return ResourceManager.GetString("MW_TABLE_LABEL", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die SQL 2 Excel Exporter ähnelt.
         /// </summary>
         public static string MW_TITLE {
             get {
                 return ResourceManager.GetString("MW_TITLE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Name ähnelt.
+        /// </summary>
+        public static string MW_TLV_HEADER_NAME {
+            get {
+                return ResourceManager.GetString("MW_TLV_HEADER_NAME", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Selected ähnelt.
+        /// </summary>
+        public static string MW_TLV_HEADER_SELECTED {
+            get {
+                return ResourceManager.GetString("MW_TLV_HEADER_SELECTED", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Type ähnelt.
+        /// </summary>
+        public static string MW_TLV_HEADER_TYPE {
+            get {
+                return ResourceManager.GetString("MW_TLV_HEADER_TYPE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Choose Table ähnelt.
+        /// </summary>
+        public static string TCW_TITLE {
+            get {
+                return ResourceManager.GetString("TCW_TITLE", resourceCulture);
             }
         }
     }
