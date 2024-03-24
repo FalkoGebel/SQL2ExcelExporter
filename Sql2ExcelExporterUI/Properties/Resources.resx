@@ -117,10 +117,10 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="DBCW_CANCEL_BUTTON_CONTENT" xml:space="preserve">
+  <data name="CW_CANCEL_BUTTON_CONTENT" xml:space="preserve">
     <value>Cancel</value>
   </data>
-  <data name="DBCW_OK_BUTTON_CONTENT" xml:space="preserve">
+  <data name="CW_OK_BUTTON_CONTENT" xml:space="preserve">
     <value>OK</value>
   </data>
   <data name="DBCW_TITLE" xml:space="preserve">
@@ -132,13 +132,40 @@
   <data name="MW_ASSIST_BUTTON_CONTENT" xml:space="preserve">
     <value>...</value>
   </data>
+  <data name="MW_COLUMNS_LABEL" xml:space="preserve">
+    <value>Columns:</value>
+  </data>
   <data name="MW_DATABASE_LABEL" xml:space="preserve">
     <value>Database:</value>
+  </data>
+  <data name="MW_DIRECTORY_LABEL" xml:space="preserve">
+    <value>Directory:</value>
+  </data>
+  <data name="MW_SELECT_ALL_TABLES_BUTTON_CONTENT" xml:space="preserve">
+    <value>Select All</value>
+  </data>
+  <data name="MW_SELECT_NONE_TABLES_BUTTON_CONTENT" xml:space="preserve">
+    <value>Select None</value>
   </data>
   <data name="MW_SERVER_LABEL" xml:space="preserve">
     <value>Server:</value>
   </data>
+  <data name="MW_TABLE_LABEL" xml:space="preserve">
+    <value>Table:</value>
+  </data>
   <data name="MW_TITLE" xml:space="preserve">
     <value>SQL 2 Excel Exporter</value>
+  </data>
+  <data name="MW_TLV_HEADER_NAME" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <data name="MW_TLV_HEADER_SELECTED" xml:space="preserve">
+    <value>Selected</value>
+  </data>
+  <data name="MW_TLV_HEADER_TYPE" xml:space="preserve">
+    <value>Type</value>
+  </data>
+  <data name="TCW_TITLE" xml:space="preserve">
+    <value>Choose Table</value>
   </data>
 </root>
