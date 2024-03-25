@@ -54,5 +54,42 @@ namespace ExporterLogicTests
             s.SaveAndClose();
             File.Exists(fileName).Should().BeTrue();
         }
+
+        [TestMethod]
+        public void CreateExcelFileWithSheetNameAndInsertHeaderLineForInvalidSheetNameAndException()
+        {
+            string fileName = _testPath + "\\SheetNameAndHeaderLineInvalidSheetName.xlsx";
+            string baseSheet = "Sheet Name";
+            string invalidSheetName = "Invalid Sheet Name";
+
+            SpreadsheetDocument s = ExcelLogic.CreateSpreadsheetDocument(fileName, baseSheet);
+            s.SaveAndClose();
+            s = ExcelLogic.OpenSpreadsheetDocument(fileName);
+            try
+            {
+                Action act = () => ExcelLogic.InsertHeaderLine(s, invalidSheetName, []);
+                act.Should().Throw<ArgumentException>().WithMessage($"Worksheet name \"{invalidSheetName}\" does not exist");
+            }
+            finally
+            {
+                s.SaveAndClose();
+                File.Exists(fileName).Should().BeTrue();
+            }
+        }
+
+        [TestMethod]
+        public void CreateExcelFileWithSheetNameAndInsertHeaderLineAndExists()
+        {
+            string fileName = _testPath + "\\SheetNameAndHeaderLineSuccess.xlsx";
+            string baseSheet = "Sheet Name";
+            List<string> headerFields = ["col 1", "col 2", "col 3", "col 4", "col 5"];
+
+            SpreadsheetDocument s = ExcelLogic.CreateSpreadsheetDocument(fileName, baseSheet);
+            s.SaveAndClose();
+            s = ExcelLogic.OpenSpreadsheetDocument(fileName);
+            ExcelLogic.InsertHeaderLine(s, baseSheet, headerFields);
+            s.SaveAndClose();
+            File.Exists(fileName).Should().BeTrue();
+        }
     }
 }
