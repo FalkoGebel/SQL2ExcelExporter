@@ -120,6 +120,9 @@
   <data name="EXCEPTION_DATABASE_MISSING" xml:space="preserve">
     <value>No database specified</value>
   </data>
+  <data name="EXCEPTION_INVALID_SHEET_NAME" xml:space="preserve">
+    <value>Worksheet name "{SHEET_NAME}" does not exist</value>
+  </data>
   <data name="EXCEPTION_MISSING_SHEET_NAME" xml:space="preserve">
     <value>No worksheet name specified</value>
   </data>

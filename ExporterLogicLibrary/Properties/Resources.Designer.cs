@@ -70,6 +70,15 @@ namespace ExporterLogicLibrary.Properties {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Worksheet name &quot;{SHEET_NAME}&quot; does not exist ähnelt.
+        /// </summary>
+        public static string EXCEPTION_INVALID_SHEET_NAME {
+            get {
+                return ResourceManager.GetString("EXCEPTION_INVALID_SHEET_NAME", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die No worksheet name specified ähnelt.
         /// </summary>
         public static string EXCEPTION_MISSING_SHEET_NAME {
