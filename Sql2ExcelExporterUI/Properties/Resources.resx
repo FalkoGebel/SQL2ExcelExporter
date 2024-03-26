@@ -135,11 +135,29 @@
   <data name="MW_COLUMNS_LABEL" xml:space="preserve">
     <value>Columns:</value>
   </data>
+  <data name="MW_CREATE_EXCEL_FILE_BUTTON_CONTENT" xml:space="preserve">
+    <value>Create Excel File</value>
+  </data>
   <data name="MW_DATABASE_LABEL" xml:space="preserve">
     <value>Database:</value>
   </data>
   <data name="MW_DIRECTORY_LABEL" xml:space="preserve">
     <value>Directory:</value>
+  </data>
+  <data name="MW_ERROR_MISSING_DIRECTORY" xml:space="preserve">
+    <value>No directory specified</value>
+  </data>
+  <data name="MW_ERROR_MISSING_TABLE" xml:space="preserve">
+    <value>No table specified</value>
+  </data>
+  <data name="MW_ERROR_NO_COLUMNS_SELECTED" xml:space="preserve">
+    <value>No columns selected</value>
+  </data>
+  <data name="MW_INFO_FILE_CREATED" xml:space="preserve">
+    <value>File "{FILE_PATH}" created</value>
+  </data>
+  <data name="MW_INFO_TITLE" xml:space="preserve">
+    <value>Information</value>
   </data>
   <data name="MW_SELECT_ALL_TABLES_BUTTON_CONTENT" xml:space="preserve">
     <value>Select All</value>
