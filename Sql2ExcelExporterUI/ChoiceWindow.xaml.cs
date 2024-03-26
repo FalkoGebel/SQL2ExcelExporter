@@ -7,8 +7,7 @@ namespace Sql2ExcelExporterUI
     /// </summary>
     public partial class ChoiceWindow : Window
     {
-        //private readonly string _title = "";
-        private string _database = "";
+        private string _choice = "";
         private readonly List<string> _elements = [];
 
         public ChoiceWindow(string title, List<string> elements)
@@ -26,13 +25,22 @@ namespace Sql2ExcelExporterUI
 
         private void SetChoiceAndCloseWindow()
         {
-            _database = (string)ElementsListView.SelectedValue;
+            _choice = (string)ElementsListView.SelectedValue;
+            if (_choice == null)
+                _choice = string.Empty;
+            DialogResult = true;
             Close();
         }
 
         public string GetChoice()
         {
-            return _database;
+            return _choice;
+        }
+
+        private void CancelButton_Click(object sender, RoutedEventArgs e)
+        {
+            DialogResult = false;
+            Close();
         }
     }
 }

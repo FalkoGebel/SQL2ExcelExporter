@@ -115,6 +115,15 @@ namespace Sql2ExcelExporterUI.Properties {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Create Excel File ähnelt.
+        /// </summary>
+        public static string MW_CREATE_EXCEL_FILE_BUTTON_CONTENT {
+            get {
+                return ResourceManager.GetString("MW_CREATE_EXCEL_FILE_BUTTON_CONTENT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Database: ähnelt.
         /// </summary>
         public static string MW_DATABASE_LABEL {
@@ -129,6 +138,51 @@ namespace Sql2ExcelExporterUI.Properties {
         public static string MW_DIRECTORY_LABEL {
             get {
                 return ResourceManager.GetString("MW_DIRECTORY_LABEL", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die No directory specified ähnelt.
+        /// </summary>
+        public static string MW_ERROR_MISSING_DIRECTORY {
+            get {
+                return ResourceManager.GetString("MW_ERROR_MISSING_DIRECTORY", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die No table specified ähnelt.
+        /// </summary>
+        public static string MW_ERROR_MISSING_TABLE {
+            get {
+                return ResourceManager.GetString("MW_ERROR_MISSING_TABLE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die No columns selected ähnelt.
+        /// </summary>
+        public static string MW_ERROR_NO_COLUMNS_SELECTED {
+            get {
+                return ResourceManager.GetString("MW_ERROR_NO_COLUMNS_SELECTED", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die File &quot;{FILE_PATH}&quot; created ähnelt.
+        /// </summary>
+        public static string MW_INFO_FILE_CREATED {
+            get {
+                return ResourceManager.GetString("MW_INFO_FILE_CREATED", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Information ähnelt.
+        /// </summary>
+        public static string MW_INFO_TITLE {
+            get {
+                return ResourceManager.GetString("MW_INFO_TITLE", resourceCulture);
             }
         }
         

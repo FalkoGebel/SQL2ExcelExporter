@@ -15,7 +15,7 @@
         <ListView x:Name="ElementsListView" Grid.Row="0" Grid.Column="0"/>
         <StackPanel Grid.Row="1" Grid.Column="0" HorizontalAlignment="Right" Orientation="Horizontal" Margin="5,0,5,0">
             <Button x:Name="OkButton" Content="{x:Static p:Resources.CW_OK_BUTTON_CONTENT}" Margin="0,5,10,5" Padding="5" IsDefault="True" Click="OkButton_Click"></Button>
-            <Button x:Name="CancelButton" Content="{x:Static p:Resources.CW_CANCEL_BUTTON_CONTENT}" Margin="0,5,10,5" Padding="5" IsCancel="True"></Button>
+            <Button x:Name="CancelButton" Content="{x:Static p:Resources.CW_CANCEL_BUTTON_CONTENT}" Margin="0,5,10,5" Padding="5" IsCancel="True" Click="CancelButton_Click"></Button>
         </StackPanel>
     </Grid>
 </Window>

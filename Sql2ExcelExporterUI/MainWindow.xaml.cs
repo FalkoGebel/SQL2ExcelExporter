@@ -1,7 +1,9 @@
-﻿using ExporterLogicLibrary;
+﻿using DocumentFormat.OpenXml.Packaging;
+using ExporterLogicLibrary;
 using ExporterLogicLibrary.Models;
 using Sql2ExcelExporterUI.Models;
 using System.Windows;
+using System.Windows.Forms;
 
 namespace Sql2ExcelExporterUI
 {
@@ -30,6 +32,7 @@ namespace Sql2ExcelExporterUI
                 ChoiceWindow dbcw = new(Properties.Resources.DBCW_TITLE, databases);
                 dbcw.ShowDialog();
                 DatabaseTextBox.Text = dbcw.GetChoice();
+                TableTextBox.Text = string.Empty;
             }
             catch (Exception e)
             {
@@ -39,7 +42,12 @@ namespace Sql2ExcelExporterUI
 
         private static void ShowError(string msg)
         {
-            MessageBox.Show(msg, Properties.Resources.ERROR_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
+            System.Windows.MessageBox.Show(msg, Properties.Resources.ERROR_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
+        }
+
+        private static void ShowInformation(string msg)
+        {
+            System.Windows.MessageBox.Show(msg, Properties.Resources.MW_INFO_TITLE, MessageBoxButton.OK, MessageBoxImage.Information);
         }
 
         private void UpdateColumnsListView(bool fromDatabase)
@@ -48,11 +56,11 @@ namespace Sql2ExcelExporterUI
             {
                 _columns = [];
 
-                if (ServerTextBox.Text == string.Empty || DatabaseTextBox.Text == string.Empty)
-                    return;
-
-                foreach (ColumnModel col in SqlLogic.GetColumnsForTable(ServerTextBox.Text, DatabaseTextBox.Text, TableTextBox.Text).OrderBy(cm => cm.Name))
-                    _columns.Add(new ColumnsListViewModel() { Name = col.Name, Selected = true, Type = col.Type });
+                if (ServerTextBox.Text != string.Empty && DatabaseTextBox.Text != string.Empty && TableTextBox.Text != string.Empty)
+                {
+                    foreach (ColumnModel col in SqlLogic.GetColumnsForTable(ServerTextBox.Text, DatabaseTextBox.Text, TableTextBox.Text).OrderBy(cm => cm.Name))
+                        _columns.Add(new ColumnsListViewModel() { Name = col.Name, Selected = true, Type = col.Type });
+                }
             }
 
             ColumnsListView.ItemsSource = null;
@@ -70,9 +78,14 @@ namespace Sql2ExcelExporterUI
             {
                 List<string> tables = SqlLogic.GetTablesForDatabase(ServerTextBox.Text, DatabaseTextBox.Text);
                 ChoiceWindow dbcw = new(Properties.Resources.TCW_TITLE, tables);
-                dbcw.ShowDialog();
+                bool? result = dbcw.ShowDialog();
+                if (result == null || !(bool)result)
+                    return;
                 TableTextBox.Text = dbcw.GetChoice();
-                UpdateColumnsListView(true);
+                //if (TableTextBox.Text == null)
+                //    return;
+                //else
+                //    UpdateColumnsListView(true);
             }
             catch (Exception e)
             {
@@ -104,6 +117,59 @@ namespace Sql2ExcelExporterUI
                 column.Selected = false;
 
             UpdateColumnsListView(false);
+        }
+
+        private void DirectoryAssistButton_Click(object sender, RoutedEventArgs e)
+        {
+            ChooseDirectory();
+        }
+
+        private void ChooseDirectory()
+        {
+            using FolderBrowserDialog fbd = new();
+            DialogResult result = fbd.ShowDialog();
+            if (result == System.Windows.Forms.DialogResult.OK && !string.IsNullOrWhiteSpace(fbd.SelectedPath))
+                DirectoryTextBox.Text = fbd.SelectedPath;
+        }
+
+        private void CreateExcelFileButton_Click(object sender, RoutedEventArgs e)
+        {
+            CreateExcelFile();
+        }
+
+        private void CreateExcelFile()
+        {
+            if (TableTextBox.Text == string.Empty)
+            {
+                ShowError(Properties.Resources.MW_ERROR_MISSING_TABLE);
+                return;
+            }
+
+            if (DirectoryTextBox.Text == string.Empty)
+            {
+                ShowError(Properties.Resources.MW_ERROR_MISSING_DIRECTORY);
+                return;
+            }
+
+            List<string> selectedColumns = _columns.Where(col => col.Selected).Select(col => col.Name).ToList();
+            if (selectedColumns.Count == 0)
+            {
+                ShowError(Properties.Resources.MW_ERROR_NO_COLUMNS_SELECTED);
+                return;
+            }
+
+            string filePath = $"{DirectoryTextBox.Text}\\{TableTextBox.Text}.xlsx";
+
+            SpreadsheetDocument s = ExcelLogic.CreateSpreadsheetDocument(filePath, TableTextBox.Text);
+            ExcelLogic.InsertHeaderLine(s, TableTextBox.Text, selectedColumns);
+            s.SaveAndClose();
+
+            ShowInformation(Properties.Resources.MW_INFO_FILE_CREATED.Replace("{FILE_PATH}", filePath));
+        }
+
+        private void TableTextBox_TextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e)
+        {
+            UpdateColumnsListView(true);
         }
     }
 }
