@@ -1,5 +1,6 @@
 using DocumentFormat.OpenXml.Packaging;
 using ExporterLogicLibrary;
+using ExporterLogicLibrary.Models;
 using FluentAssertions;
 
 namespace ExporterLogicTests
@@ -88,6 +89,61 @@ namespace ExporterLogicTests
             s.SaveAndClose();
             s = ExcelLogic.OpenSpreadsheetDocument(fileName);
             ExcelLogic.InsertHeaderLine(s, baseSheet, headerFields);
+            s.SaveAndClose();
+            File.Exists(fileName).Should().BeTrue();
+        }
+
+        [TestMethod]
+        public void CreateExcelFileInsertDataLineOnlyTextAndExists()
+        {
+            string fileName = _testPath + "\\DataLineOnlyTextSuccess.xlsx";
+            string baseSheet = "Only Text Data";
+            List<string> dataFields = ["cell 1", "cell 2", "other text", "once more", "number 5"];
+
+            SpreadsheetDocument s = ExcelLogic.CreateSpreadsheetDocument(fileName, baseSheet);
+            s.SaveAndClose();
+            s = ExcelLogic.OpenSpreadsheetDocument(fileName);
+            ExcelLogic.InsertDataLine(s, baseSheet, dataFields.Select(f => new CellModel() { Type = "string", Value = f }).ToList());
+            s.SaveAndClose();
+            File.Exists(fileName).Should().BeTrue();
+        }
+
+        [TestMethod]
+        public void CreateExcelFileInsertHeaderAndDataLineOnlyTextAndExists()
+        {
+            string fileName = _testPath + "\\HeaderAndDataLineOnlyTextSuccess.xlsx";
+            string baseSheet = "Only Text Data";
+            List<string> headerFields = ["col 1", "col 2", "col 3", "col 4", "col 5"];
+            List<string> dataFields = ["cell 1", "cell 2", "other text", "once more", "number 5"];
+
+            SpreadsheetDocument s = ExcelLogic.CreateSpreadsheetDocument(fileName, baseSheet);
+            s.SaveAndClose();
+            s = ExcelLogic.OpenSpreadsheetDocument(fileName);
+            ExcelLogic.InsertHeaderLine(s, baseSheet, headerFields);
+            ExcelLogic.InsertDataLine(s, baseSheet, dataFields.Select(f => new CellModel() { Type = "string", Value = f }).ToList());
+            s.SaveAndClose();
+            File.Exists(fileName).Should().BeTrue();
+        }
+
+
+        [TestMethod]
+        public void CreateExcelFileInsertHeaderAndDataLineOnlyNumbersAndExists()
+        {
+            string fileName = _testPath + "\\HeaderAndDataLineOnlyNumberSuccess.xlsx";
+            string baseSheet = "Only Text Data";
+            List<string> headerFields = ["col 1", "col 2", "col 3", "col 4", "col 5"];
+            List<CellModel> dataFields = [
+                new CellModel() { Type = "Int", Value = "2" },
+                new CellModel() { Type = "Int", Value = "5" },
+                new CellModel() { Type = "Int", Value = "6" },
+                new CellModel() { Type = "Int", Value = "99" },
+                new CellModel() { Type = "Int", Value = "1" }];
+
+            SpreadsheetDocument s = ExcelLogic.CreateSpreadsheetDocument(fileName, baseSheet);
+            s.SaveAndClose();
+            s = ExcelLogic.OpenSpreadsheetDocument(fileName);
+            ExcelLogic.InsertHeaderLine(s, baseSheet, headerFields);
+            ExcelLogic.InsertDataLine(s, baseSheet, dataFields);
             s.SaveAndClose();
             File.Exists(fileName).Should().BeTrue();
         }
