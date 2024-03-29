@@ -1,6 +1,7 @@
 ﻿using DocumentFormat.OpenXml;
 using DocumentFormat.OpenXml.Packaging;
 using DocumentFormat.OpenXml.Spreadsheet;
+using ExporterLogicLibrary.Models;
 
 namespace ExporterLogicLibrary
 {
@@ -60,7 +61,7 @@ namespace ExporterLogicLibrary
             return output;
         }
 
-        public static void InsertHeaderLine(SpreadsheetDocument s, string sheetName, List<string> headerFields)
+        private static void InsertLine(SpreadsheetDocument s, string sheetName, uint styleIndex, List<CellModel> fields)
         {
             if (sheetName == "")
                 throw new ArgumentException(Properties.Resources.EXCEPTION_MISSING_SHEET_NAME);
@@ -71,24 +72,40 @@ namespace ExporterLogicLibrary
                 ?? throw new ArgumentException(Properties.Resources.EXCEPTION_INVALID_SHEET_NAME.Replace("{SHEET_NAME}", sheetName));
             WorksheetPart worksheetPart = workbookPart.GetPartById(sheet.Id) as WorksheetPart;
             SheetData sheetData = worksheetPart.Worksheet.Elements<SheetData>().FirstOrDefault();
-            List<char> headerChars = new List<char>(Enumerable.Range('A', 'Z' - 'A' + 1).Select(i => (char)i).ToArray()).GetRange(0, headerFields.Count);
-            Row header = new()
-            {
-                RowIndex = 1
-            };
-            for (int i = 0; i < headerFields.Count; i++)
-            {
-                Cell cell = new()
-                {
-                    DataType = CellValues.InlineString,
-                    CellReference = headerChars[i].ToString() + 1,
-                    InlineString = new InlineString { Text = new Text { Text = headerFields[i] } },
-                    StyleIndex = 2
-                };
+            List<char> columnChars = new List<char>(Enumerable.Range('A', 'Z' - 'A' + 1).Select(i => (char)i).ToArray()).GetRange(0, fields.Count);
 
-                header.Append(cell);
+            Row lastRow = worksheetPart.Worksheet.Descendants<Row>().FirstOrDefault();
+            Row row = new()
+            {
+                RowIndex = lastRow == null ? 1 : lastRow.RowIndex + 1
+            };
+            for (int i = 0; i < fields.Count; i++)
+            {
+                row.Append(
+                    GetNewCell(
+                        fields[i].CellValueDataType,
+                        columnChars[i].ToString() + row.RowIndex,
+                        fields[i].Value,
+                        styleIndex));
             }
-            sheetData.Append(header);
+            sheetData.Append(row);
+        }
+
+        private static Cell GetNewCell(CellValues dataType, string cellReference, string cellValue, uint styleIndex)
+        {
+            Cell cell = new()
+            {
+                DataType = dataType,
+                CellReference = cellReference,
+                StyleIndex = styleIndex
+            };
+
+            if (cell.DataType == CellValues.InlineString)
+                cell.InlineString = new InlineString { Text = new Text { Text = cellValue } };
+            else
+                cell.CellValue = new CellValue(cellValue);
+
+            return cell;
         }
 
         private static Stylesheet GenerateStylesheet()
@@ -128,6 +145,16 @@ namespace ExporterLogicLibrary
                 );
 
             return new Stylesheet(fonts, fills, borders, cellFormats);
+        }
+
+        public static void InsertDataLine(SpreadsheetDocument s, string baseSheet, List<CellModel> dataFields)
+        {
+            InsertLine(s, baseSheet, 1, dataFields);
+        }
+
+        public static void InsertHeaderLine(SpreadsheetDocument s, string baseSheet, List<string> headerFields)
+        {
+            InsertLine(s, baseSheet, 2, headerFields.Select(f => new CellModel() { Type = "string", Value = f }).ToList());
         }
     }
 }
