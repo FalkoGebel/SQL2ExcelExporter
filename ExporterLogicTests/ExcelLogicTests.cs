@@ -125,7 +125,6 @@ namespace ExporterLogicTests
             File.Exists(fileName).Should().BeTrue();
         }
 
-
         [TestMethod]
         public void CreateExcelFileInsertHeaderAndDataLineOnlyNumbersAndExists()
         {
@@ -144,6 +143,35 @@ namespace ExporterLogicTests
             s = ExcelLogic.OpenSpreadsheetDocument(fileName);
             ExcelLogic.InsertHeaderLine(s, baseSheet, headerFields);
             ExcelLogic.InsertDataLine(s, baseSheet, dataFields);
+            s.SaveAndClose();
+            File.Exists(fileName).Should().BeTrue();
+        }
+
+        [TestMethod]
+        public void CreateExcelFileInsertHeaderAndTwoDataLinesOnlyNumbersAndExists()
+        {
+            string fileName = _testPath + "\\HeaderAndTwoDataLinesOnlyNumberSuccess.xlsx";
+            string baseSheet = "Only Text Data";
+            List<string> headerFields = ["col 1", "col 2", "col 3", "col 4", "col 5"];
+            List<CellModel> dataFields = [
+                new CellModel() { Type = "Int", Value = "2" },
+                new CellModel() { Type = "Int", Value = "5" },
+                new CellModel() { Type = "Int", Value = "6" },
+                new CellModel() { Type = "Int", Value = "99" },
+                new CellModel() { Type = "Int", Value = "1" }];
+            List<CellModel> dataFields2 = [
+                new CellModel() { Type = "Int", Value = "4" },
+                new CellModel() { Type = "Int", Value = "54" },
+                new CellModel() { Type = "Int", Value = "634" },
+                new CellModel() { Type = "Int", Value = "100" },
+                new CellModel() { Type = "Int", Value = "7" }];
+
+            SpreadsheetDocument s = ExcelLogic.CreateSpreadsheetDocument(fileName, baseSheet);
+            s.SaveAndClose();
+            s = ExcelLogic.OpenSpreadsheetDocument(fileName);
+            ExcelLogic.InsertHeaderLine(s, baseSheet, headerFields);
+            ExcelLogic.InsertDataLine(s, baseSheet, dataFields);
+            ExcelLogic.InsertDataLine(s, baseSheet, dataFields2);
             s.SaveAndClose();
             File.Exists(fileName).Should().BeTrue();
         }

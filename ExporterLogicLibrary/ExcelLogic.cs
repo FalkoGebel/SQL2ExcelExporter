@@ -72,23 +72,38 @@ namespace ExporterLogicLibrary
                 ?? throw new ArgumentException(Properties.Resources.EXCEPTION_INVALID_SHEET_NAME.Replace("{SHEET_NAME}", sheetName));
             WorksheetPart worksheetPart = workbookPart.GetPartById(sheet.Id) as WorksheetPart;
             SheetData sheetData = worksheetPart.Worksheet.Elements<SheetData>().FirstOrDefault();
-            List<char> columnChars = new List<char>(Enumerable.Range('A', 'Z' - 'A' + 1).Select(i => (char)i).ToArray()).GetRange(0, fields.Count);
-
-            Row lastRow = worksheetPart.Worksheet.Descendants<Row>().FirstOrDefault();
+            Row lastRow = worksheetPart.Worksheet.Descendants<Row>().LastOrDefault();
             Row row = new()
             {
                 RowIndex = lastRow == null ? 1 : lastRow.RowIndex + 1
             };
+
             for (int i = 0; i < fields.Count; i++)
             {
                 row.Append(
                     GetNewCell(
                         fields[i].CellValueDataType,
-                        columnChars[i].ToString() + row.RowIndex,
+                        GetExcelColumnName(i) + row.RowIndex,
                         fields[i].Value,
                         styleIndex));
             }
+
             sheetData.Append(row);
+        }
+
+        private static string GetExcelColumnName(int columnIndex)
+        {
+            string output = string.Empty;
+            columnIndex++;
+
+            while (columnIndex > 0)
+            {
+                int modulo = (columnIndex - 1) % 26;
+                output = Convert.ToChar('A' + modulo) + output;
+                columnIndex = (columnIndex - modulo) / 26;
+            }
+
+            return output;
         }
 
         private static Cell GetNewCell(CellValues dataType, string cellReference, string cellValue, uint styleIndex)
