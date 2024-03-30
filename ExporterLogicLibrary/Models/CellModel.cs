@@ -12,7 +12,7 @@ namespace ExporterLogicLibrary.Models
             {
                 return Type switch
                 {
-                    "Int" => CellValues.Number,
+                    "int" => CellValues.Number,
                     _ => CellValues.InlineString,
                 };
             }

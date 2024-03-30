@@ -147,42 +147,71 @@ namespace ExporterLogicTests
         [TestMethod]
         public void CallGetContentForMSreplication_optionsTableInMasterDBAndGetCorrectNumberOfEntries()
         {
-            List<List<string>> lines = SqlLogic.GetContentForTable(_serverFromFile, "master", "MSreplication_options");
+            List<List<CellModel>> lines = SqlLogic.GetContentForTable(_serverFromFile, "master", "MSreplication_options");
             lines.Count.Should().Be(3);
         }
 
         [TestMethod]
         public void CallGetContentForCompanyTableInDemoDatabaseNAV_11_0_DBAndGetCorrectNumberOfEntries()
         {
-            List<List<string>> lines = SqlLogic.GetContentForTable(_serverFromFile, "Demo Database NAV (11-0)", "Company");
+            List<List<CellModel>> lines = SqlLogic.GetContentForTable(_serverFromFile, "Demo Database NAV (11-0)", "Company");
             lines.Count.Should().Be(1);
         }
 
         [TestMethod]
         public void CallGetContentForMSreplication_optionsTableInMasterDBAndGetCorrectValues()
         {
-            List<List<string>> expected = [
-                ["transactional", "True", "90", "0", "0", "0"],
-                ["merge", "True", "90", "0", "0", "0"],
-                ["security_model", "True", "90", "0", "0", "0"]
+            List<List<CellModel>> expected = [
+                [new CellModel() { Type = "nvarchar", Value = "transactional" },
+                new CellModel() { Type = "bit", Value = "True" },
+                new CellModel() { Type = "int", Value = "90" },
+                new CellModel() { Type = "int", Value = "0" },
+                new CellModel() { Type = "int", Value = "0" },
+                new CellModel() { Type = "int", Value = "0" }],
+                [new CellModel() { Type = "nvarchar", Value = "merge" },
+                new CellModel() { Type = "bit", Value = "True" },
+                new CellModel() { Type = "int", Value = "90" },
+                new CellModel() { Type = "int", Value = "0" },
+                new CellModel() { Type = "int", Value = "0" },
+                new CellModel() { Type = "int", Value = "0" }],
+                [new CellModel() { Type = "nvarchar", Value = "security_model" },
+                new CellModel() { Type = "bit", Value = "True" },
+                new CellModel() { Type = "int", Value = "90" },
+                new CellModel() { Type = "int", Value = "0" },
+                new CellModel() { Type = "int", Value = "0" },
+                new CellModel() { Type = "int", Value = "0" }],
             ];
 
-            List<List<string>> lines = SqlLogic.GetContentForTable(_serverFromFile, "master", "MSreplication_options");
+            List<List<CellModel>> lines = SqlLogic.GetContentForTable(_serverFromFile, "master", "MSreplication_options");
             lines.Should().BeEquivalentTo(expected);
         }
 
         [TestMethod]
         public void CallGetContentForMSreplication_optionsTableInMasterDBWithSubsetOfColumnsAndGetCorrectValues()
         {
-            List<string> columns = ["optname", "value", "major_version", "install_failures"];
-
-            List<List<string>> expected = [
-                ["transactional", "True", "90", "0"],
-                ["merge", "True", "90", "0"],
-                ["security_model", "True", "90", "0"]
+            List<ColumnModel> columns = [
+                new ColumnModel() { Name = "optname", Type = "nvarchar" },
+                new ColumnModel() { Name = "value", Type = "bit" },
+                new ColumnModel() { Name = "major_version", Type = "int" },
+                new ColumnModel() { Name = "install_failures", Type = "int" },
             ];
 
-            List<List<string>> lines = SqlLogic.GetContentForTable(_serverFromFile, "master", "MSreplication_options",
+            List<List<CellModel>> expected = [
+                [new CellModel() { Type = "nvarchar", Value = "transactional" },
+                new CellModel() { Type = "bit", Value = "True" },
+                new CellModel() { Type = "int", Value = "90" },
+                new CellModel() { Type = "int", Value = "0" }],
+                [new CellModel() { Type = "nvarchar", Value = "merge" },
+                new CellModel() { Type = "bit", Value = "True" },
+                new CellModel() { Type = "int", Value = "90" },
+                new CellModel() { Type = "int", Value = "0" }],
+                [new CellModel() { Type = "nvarchar", Value = "security_model" },
+                new CellModel() { Type = "bit", Value = "True" },
+                new CellModel() { Type = "int", Value = "90" },
+                new CellModel() { Type = "int", Value = "0" }],
+            ];
+
+            List<List<CellModel>> lines = SqlLogic.GetContentForTable(_serverFromFile, "master", "MSreplication_options",
                 columns);
             lines.Should().BeEquivalentTo(expected);
         }
@@ -190,16 +219,28 @@ namespace ExporterLogicTests
         [TestMethod]
         public void CallGetContentForMSreplication_optionsTableInMasterDBWithColumsListAndGetCorrectValues()
         {
-            List<List<string>> expected = [
-                ["transactional", "True", "90", "0", "0", "0"],
-                ["merge", "True", "90", "0", "0", "0"],
-                ["security_model", "True", "90", "0", "0", "0"]
+            List<List<CellModel>> expected = [
+                [new CellModel() { Type = "nvarchar", Value = "transactional" },
+                new CellModel() { Type = "bit", Value = "True" },
+                new CellModel() { Type = "int", Value = "90" },
+                new CellModel() { Type = "int", Value = "0" },
+                new CellModel() { Type = "int", Value = "0" },
+                new CellModel() { Type = "int", Value = "0" }],
+                [new CellModel() { Type = "nvarchar", Value = "merge" },
+                new CellModel() { Type = "bit", Value = "True" },
+                new CellModel() { Type = "int", Value = "90" },
+                new CellModel() { Type = "int", Value = "0" },
+                new CellModel() { Type = "int", Value = "0" },
+                new CellModel() { Type = "int", Value = "0" }],
+                [new CellModel() { Type = "nvarchar", Value = "security_model" },
+                new CellModel() { Type = "bit", Value = "True" },
+                new CellModel() { Type = "int", Value = "90" },
+                new CellModel() { Type = "int", Value = "0" },
+                new CellModel() { Type = "int", Value = "0" },
+                new CellModel() { Type = "int", Value = "0" }],
             ];
 
-            List<ColumnModel> columns = SqlLogic.GetColumnsForTable(_serverFromFile, "master", "MSreplication_options");
-
-            List<List<string>> lines = SqlLogic.GetContentForTable(_serverFromFile, "master", "MSreplication_options",
-                columns.Select(c => c.Name).ToList());
+            List<List<CellModel>> lines = SqlLogic.GetContentForTable(_serverFromFile, "master", "MSreplication_options");
             lines.Should().BeEquivalentTo(expected);
         }
     }
