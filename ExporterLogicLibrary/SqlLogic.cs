@@ -21,23 +21,25 @@ namespace ExporterLogicLibrary
             return output;
         }
 
-        public static List<List<string>> GetContentForTable(string server, string database, string table, List<string>? columns = null)
+        public static List<List<CellModel>> GetContentForTable(string server, string database, string table, List<ColumnModel>? columns = null)
         {
             if (table == string.Empty)
                 throw new ArgumentException(Properties.Resources.EXCEPTION_TABLE_MISSING);
 
-            List<List<string>> output = [];
+            columns ??= GetColumnsForTable(server, database, table);
+
+            List<List<CellModel>> output = [];
 
             using (SqlConnection cnn = GetOpenConnection(server, database))
             {
-                SqlCommand cmd = new($"SELECT {(columns == null ? "*" : string.Join(", ", columns))} FROM {table};", cnn);
+                SqlCommand cmd = new($"SELECT {string.Join(", ", columns.Select(cm => "[" + cm.Name + "]"))} FROM [{table}];", cnn);
 
                 using SqlDataReader reader = cmd.ExecuteReader();
                 while (reader.Read())
                 {
-                    List<string> line = [];
+                    List<CellModel> line = [];
                     for (int i = 0; i < reader.FieldCount; i++)
-                        line.Add($"{reader[i]}");
+                        line.Add(new CellModel() { Type = columns[i].Type, Value = $"{reader[i]}" });
 
                     output.Add(line);
                 }
@@ -52,7 +54,7 @@ namespace ExporterLogicLibrary
 
             using (SqlConnection cnn = GetOpenConnection(server))
             {
-                output = cnn.Query<string>("SELECT name FROM sys.databases;").AsList();
+                output = cnn.Query<string>("SELECT [name] FROM sys.databases;").AsList();
             }
 
             return output;
