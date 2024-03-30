@@ -77,15 +77,11 @@ namespace Sql2ExcelExporterUI
             try
             {
                 List<string> tables = SqlLogic.GetTablesForDatabase(ServerTextBox.Text, DatabaseTextBox.Text);
-                ChoiceWindow dbcw = new(Properties.Resources.TCW_TITLE, tables);
+                ChoiceWindow dbcw = new(Properties.Resources.TCW_TITLE, [.. tables.OrderBy(t => t)]);
                 bool? result = dbcw.ShowDialog();
                 if (result == null || !(bool)result)
                     return;
                 TableTextBox.Text = dbcw.GetChoice();
-                //if (TableTextBox.Text == null)
-                //    return;
-                //else
-                //    UpdateColumnsListView(true);
             }
             catch (Exception e)
             {
@@ -151,17 +147,27 @@ namespace Sql2ExcelExporterUI
                 return;
             }
 
-            List<string> selectedColumns = _columns.Where(col => col.Selected).Select(col => col.Name).ToList();
+            List<ColumnModel> selectedColumns = _columns.Where(col => col.Selected).Select(clvw => new ColumnModel() { Name = clvw.Name, Type = clvw.Type }).ToList();
             if (selectedColumns.Count == 0)
             {
                 ShowError(Properties.Resources.MW_ERROR_NO_COLUMNS_SELECTED);
                 return;
             }
 
+            // Get the data for the selected columns
+            List<List<CellModel>> dataLines = SqlLogic.GetContentForTable(ServerTextBox.Text, DatabaseTextBox.Text, TableTextBox.Text,
+                selectedColumns);
+
             string filePath = $"{DirectoryTextBox.Text}\\{TableTextBox.Text}.xlsx";
 
             SpreadsheetDocument s = ExcelLogic.CreateSpreadsheetDocument(filePath, TableTextBox.Text);
-            ExcelLogic.InsertHeaderLine(s, TableTextBox.Text, selectedColumns);
+            ExcelLogic.InsertHeaderLine(s, TableTextBox.Text, selectedColumns.Select(cm => cm.Name).ToList());
+
+            foreach (List<CellModel> line in dataLines)
+            {
+                ExcelLogic.InsertDataLine(s, TableTextBox.Text, line);
+            }
+
             s.SaveAndClose();
 
             ShowInformation(Properties.Resources.MW_INFO_FILE_CREATED.Replace("{FILE_PATH}", filePath));
