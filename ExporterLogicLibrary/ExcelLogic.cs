@@ -61,7 +61,7 @@ namespace ExporterLogicLibrary
             return output;
         }
 
-        private static void InsertLine(SpreadsheetDocument s, string sheetName, uint styleIndex, List<CellModel> fields)
+        private static void InsertLine(SpreadsheetDocument s, string sheetName, List<CellModel> fields, uint? styleIndex = null)
         {
             if (sheetName == "")
                 throw new ArgumentException(Properties.Resources.EXCEPTION_MISSING_SHEET_NAME);
@@ -85,7 +85,7 @@ namespace ExporterLogicLibrary
                         fields[i].CellValueDataType,
                         GetExcelColumnName(i) + row.RowIndex,
                         fields[i].Value,
-                        styleIndex));
+                        styleIndex != null ? (uint)styleIndex : fields[i].CellValueStyleIndex));
             }
 
             sheetData.Append(row);
@@ -112,13 +112,9 @@ namespace ExporterLogicLibrary
             {
                 DataType = dataType,
                 CellReference = cellReference,
-                StyleIndex = styleIndex
+                StyleIndex = styleIndex,
+                CellValue = new CellValue(cellValue)
             };
-
-            if (cell.DataType == CellValues.InlineString)
-                cell.InlineString = new InlineString { Text = new Text { Text = cellValue } };
-            else
-                cell.CellValue = new CellValue(cellValue);
 
             return cell;
         }
@@ -153,23 +149,27 @@ namespace ExporterLogicLibrary
                         new DiagonalBorder())
                 );
 
-            CellFormats cellFormats = new(
-                    new CellFormat(), // default
-                    new CellFormat { FontId = 0, FillId = 0, BorderId = 1, ApplyBorder = true }, // body
-                    new CellFormat { FontId = 1, FillId = 2, BorderId = 1, ApplyFill = true } // header
+            NumberingFormats numberingFormats = new(
+                    new NumberingFormat() { NumberFormatId = 100U, FormatCode = StringValue.FromString("@") }
                 );
 
-            return new Stylesheet(fonts, fills, borders, cellFormats);
+            CellFormats cellFormats = new(
+                    new CellFormat(), // default
+                    new CellFormat { FontId = 1, FillId = 2, BorderId = 1, ApplyFill = true, NumberFormatId = 100U }, // header
+                    new CellFormat { FontId = 0, FillId = 0, BorderId = 1, ApplyBorder = true } // body
+                );
+
+            return new Stylesheet(fonts, fills, borders, cellFormats, numberingFormats);
         }
 
         public static void InsertDataLine(SpreadsheetDocument s, string baseSheet, List<CellModel> dataFields)
         {
-            InsertLine(s, baseSheet, 1, dataFields);
+            InsertLine(s, baseSheet, dataFields);
         }
 
         public static void InsertHeaderLine(SpreadsheetDocument s, string baseSheet, List<string> headerFields)
         {
-            InsertLine(s, baseSheet, 2, headerFields.Select(f => new CellModel() { Type = "string", Value = f }).ToList());
+            InsertLine(s, baseSheet, headerFields.Select(f => new CellModel() { Type = "", Value = f }).ToList(), 1);
         }
     }
 }
