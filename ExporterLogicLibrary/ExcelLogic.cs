@@ -171,5 +171,135 @@ namespace ExporterLogicLibrary
         {
             InsertLine(s, baseSheet, headerFields.Select(f => new CellModel() { Type = "", Value = f }).ToList(), 1);
         }
+
+        // TODO - new function, not tested and not integrated
+        private static uint GetStyleIndex(this SpreadsheetDocument s, CellFormatDefinition cfd)
+        {
+            if (s.WorkbookPart == null)
+            {
+                s.AddWorkbookPart();
+                WorkbookStylesPart? workbookStylesPart = s.WorkbookPart?.AddNewPart<WorkbookStylesPart>();
+                workbookStylesPart.Stylesheet = new(
+                    new Fonts(),
+                    new Fills(),
+                    new Borders(),
+                    new NumberingFormats(),
+                    new CellFormats());
+                workbookStylesPart.Stylesheet.Save();
+            }
+
+            Stylesheet stylesheet = s.WorkbookPart.WorkbookStylesPart.Stylesheet;
+
+            // Find font index
+            int fontIndex = -1;
+
+            foreach (Font f in stylesheet.Fonts.Cast<Font>())
+            {
+                fontIndex++;
+
+                if (f.Equals(cfd.Font))
+                    break;
+            }
+
+            if (fontIndex < 0)
+            {
+                stylesheet.Fonts.AddChild(cfd.Font);
+                fontIndex = stylesheet.Fonts.Count() - 1;
+            }
+
+            // Find fill index
+            int fillIndex = -1;
+
+            foreach (Fill f in stylesheet.Fills.Cast<Fill>())
+            {
+                fillIndex++;
+
+                if (f.Equals(cfd.Fill))
+                    break;
+            }
+
+            if (fillIndex < 0)
+            {
+                stylesheet.Fills.AddChild(cfd.Fill);
+                fillIndex = stylesheet.Fills.Count() - 1;
+            }
+
+            // Find border index
+            int borderIndex = -1;
+
+            foreach (Border b in stylesheet.Borders.Cast<Border>())
+            {
+                borderIndex++;
+
+                if (b.Equals(cfd.Border))
+                    break;
+            }
+
+            if (borderIndex < 0)
+            {
+                stylesheet.Borders.AddChild(cfd.Border);
+                borderIndex = stylesheet.Borders.Count() - 1;
+            }
+
+            // Find number format index
+            int numberingFormatIndex = -1;
+
+            if (cfd.NumberingFormat != null)
+            {
+                foreach (NumberingFormat nf in stylesheet.NumberingFormats.Cast<NumberingFormat>())
+                {
+                    numberingFormatIndex++;
+
+                    if (nf.Equals(cfd.NumberingFormat))
+                        break;
+                }
+
+                if (numberingFormatIndex < 0)
+                {
+                    stylesheet.NumberingFormats.AddChild(cfd.NumberingFormat);
+                    numberingFormatIndex = stylesheet.NumberingFormats.Count() - 1;
+                }
+            }
+
+            // Find cell format index
+            int cellFormatIndex = -1;
+
+            foreach (CellFormat cf in stylesheet.CellFormats.Cast<CellFormat>())
+            {
+                cellFormatIndex++;
+
+                if ((cf.FontId != null && cf.FontId == (uint)fontIndex) &&
+                    (cf.FillId != null && cf.FillId == (uint)fillIndex) &&
+                    (cf.ApplyFill != null && cf.ApplyFill == cfd.ApplyFill) &&
+                    (cf.BorderId != null && cf.BorderId == (uint)borderIndex) &&
+                    (cf.ApplyBorder != null && cf.ApplyBorder == cfd.ApplyBorder) &&
+                    (cf.NumberFormatId != null && cf.NumberFormatId == (uint)numberingFormatIndex))
+                {
+                    break;
+                }
+            }
+
+            if (cellFormatIndex < 0)
+            {
+                stylesheet.CellFormats.AddChild(new CellFormat
+                {
+                    FontId = (uint)fontIndex,
+                    FillId = (uint)fillIndex,
+                    ApplyFill = cfd.ApplyFill,
+                    BorderId = (uint)borderIndex,
+                    ApplyBorder = cfd.ApplyBorder,
+                    NumberFormatId = (uint)numberingFormatIndex
+                });
+                cellFormatIndex = stylesheet.CellFormats.Count() - 1;
+            }
+
+            if (!s.WorkbookPart.WorkbookStylesPart.Stylesheet.Equals(stylesheet))
+            {
+                s.WorkbookPart.WorkbookStylesPart.Stylesheet = stylesheet;
+                s.WorkbookPart.WorkbookStylesPart.Stylesheet.Save();
+            }
+
+            return (uint)cellFormatIndex;
+        }
     }
 }
