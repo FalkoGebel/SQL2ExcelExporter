@@ -13,10 +13,6 @@ namespace ExporterLogicLibrary
             WorkbookPart workbookPart = output.AddWorkbookPart();
             workbookPart.Workbook = new Workbook();
 
-            WorkbookStylesPart workbookStylesPart = workbookPart.AddNewPart<WorkbookStylesPart>();
-            workbookStylesPart.Stylesheet = GenerateStylesheet();
-            workbookStylesPart.Stylesheet.Save();
-
             if (baseSheet != "")
                 InsertWorksheet(output, baseSheet);
             else
@@ -61,7 +57,7 @@ namespace ExporterLogicLibrary
             return output;
         }
 
-        private static void InsertLine(SpreadsheetDocument s, string sheetName, List<CellModel> fields, uint? styleIndex = null)
+        private static void InsertLine(SpreadsheetDocument s, string sheetName, List<CellModel> fields)
         {
             if (sheetName == "")
                 throw new ArgumentException(Properties.Resources.EXCEPTION_MISSING_SHEET_NAME);
@@ -85,7 +81,7 @@ namespace ExporterLogicLibrary
                         fields[i].CellValueDataType,
                         GetExcelColumnName(i) + row.RowIndex,
                         fields[i].Value,
-                        styleIndex != null ? (uint)styleIndex : fields[i].CellValueStyleIndex));
+                        s.GetStyleIndex(fields[i].CellFormatDefintion)));
             }
 
             sheetData.Append(row);
@@ -119,48 +115,48 @@ namespace ExporterLogicLibrary
             return cell;
         }
 
-        private static Stylesheet GenerateStylesheet()
-        {
-            Fonts fonts = new(
-                new Font( // Index 0 - default
-                    new FontSize() { Val = 10 }
+        //private static Stylesheet GenerateStylesheet()
+        //{
+        //    Fonts fonts = new(
+        //        new Font( // Index 0 - default
+        //            new FontSize() { Val = 10 }
 
-                ),
-                new Font( // Index 1 - header
-                    new FontSize() { Val = 10 },
-                    new Bold(),
-                    new Color() { Rgb = "FFFFFF" }
-                ));
+        //        ),
+        //        new Font( // Index 1 - header
+        //            new FontSize() { Val = 10 },
+        //            new Bold(),
+        //            new Color() { Rgb = "FFFFFF" }
+        //        ));
 
-            Fills fills = new(
-                    new Fill(new PatternFill() { PatternType = PatternValues.None }), // Index 0 - default
-                    new Fill(new PatternFill() { PatternType = PatternValues.Gray125 }), // Index 1 - default
-                    new Fill(new PatternFill(new ForegroundColor { Rgb = new HexBinaryValue() { Value = "66666666" } })
-                    { PatternType = PatternValues.Solid }) // Index 2 - header
-                );
+        //    Fills fills = new(
+        //            new Fill(new PatternFill() { PatternType = PatternValues.None }), // Index 0 - default
+        //            new Fill(new PatternFill() { PatternType = PatternValues.Gray125 }), // Index 1 - default
+        //            new Fill(new PatternFill(new ForegroundColor { Rgb = new HexBinaryValue() { Value = "66666666" } })
+        //            { PatternType = PatternValues.Solid }) // Index 2 - header
+        //        );
 
-            Borders borders = new(
-                    new Border(), // index 0 default
-                    new Border( // index 1 black border
-                        new LeftBorder(new Color() { Auto = true }) { Style = BorderStyleValues.Thin },
-                        new RightBorder(new Color() { Auto = true }) { Style = BorderStyleValues.Thin },
-                        new TopBorder(new Color() { Auto = true }) { Style = BorderStyleValues.Thin },
-                        new BottomBorder(new Color() { Auto = true }) { Style = BorderStyleValues.Thin },
-                        new DiagonalBorder())
-                );
+        //    Borders borders = new(
+        //            new Border(), // index 0 default
+        //            new Border( // index 1 black border
+        //                new LeftBorder(new Color() { Auto = true }) { Style = BorderStyleValues.Thin },
+        //                new RightBorder(new Color() { Auto = true }) { Style = BorderStyleValues.Thin },
+        //                new TopBorder(new Color() { Auto = true }) { Style = BorderStyleValues.Thin },
+        //                new BottomBorder(new Color() { Auto = true }) { Style = BorderStyleValues.Thin },
+        //                new DiagonalBorder())
+        //        );
 
-            NumberingFormats numberingFormats = new(
-                    new NumberingFormat() { NumberFormatId = 100U, FormatCode = StringValue.FromString("@") }
-                );
+        //    NumberingFormats numberingFormats = new(
+        //            new NumberingFormat() { NumberFormatId = 100U, FormatCode = StringValue.FromString("@") }
+        //        );
 
-            CellFormats cellFormats = new(
-                    new CellFormat(), // default
-                    new CellFormat { FontId = 1, FillId = 2, BorderId = 1, ApplyFill = true, NumberFormatId = 100U }, // header
-                    new CellFormat { FontId = 0, FillId = 0, BorderId = 1, ApplyBorder = true } // body
-                );
+        //    CellFormats cellFormats = new(
+        //            new CellFormat(), // default
+        //            new CellFormat { FontId = 1, FillId = 2, BorderId = 1, ApplyFill = true, NumberFormatId = 100U }, // header
+        //            new CellFormat { FontId = 0, FillId = 0, BorderId = 1, ApplyBorder = true } // body
+        //        );
 
-            return new Stylesheet(fonts, fills, borders, cellFormats, numberingFormats);
-        }
+        //    return new Stylesheet(fonts, fills, borders, cellFormats, numberingFormats);
+        //}
 
         public static void InsertDataLine(SpreadsheetDocument s, string baseSheet, List<CellModel> dataFields)
         {
@@ -169,15 +165,18 @@ namespace ExporterLogicLibrary
 
         public static void InsertHeaderLine(SpreadsheetDocument s, string baseSheet, List<string> headerFields)
         {
-            InsertLine(s, baseSheet, headerFields.Select(f => new CellModel() { Type = "", Value = f }).ToList(), 1);
+            CellFormatDefinition cfd = new()
+            {
+                Bold = true
+            };
+
+            InsertLine(s, baseSheet, headerFields.Select(f => new CellModel() { Type = "", Value = f, FormatDefinition = cfd }).ToList());
         }
 
-        // TODO - new function, not tested and not integrated
         private static uint GetStyleIndex(this SpreadsheetDocument s, CellFormatDefinition cfd)
         {
-            if (s.WorkbookPart == null)
+            if (s.WorkbookPart.WorkbookStylesPart == null)
             {
-                s.AddWorkbookPart();
                 WorkbookStylesPart? workbookStylesPart = s.WorkbookPart?.AddNewPart<WorkbookStylesPart>();
                 workbookStylesPart.Stylesheet = new(
                     new Fonts(),
@@ -192,57 +191,61 @@ namespace ExporterLogicLibrary
 
             // Find font index
             int fontIndex = -1;
+            bool found = false;
 
             foreach (Font f in stylesheet.Fonts.Cast<Font>())
             {
                 fontIndex++;
 
-                if (f.Equals(cfd.Font))
-                    break;
+                if (f.OuterXml.Equals(cfd.Font.OuterXml))
+                { found = true; break; }
             }
 
-            if (fontIndex < 0)
+            if (!found)
             {
-                stylesheet.Fonts.AddChild(cfd.Font);
+                stylesheet.Fonts.AppendChild(cfd.Font);
                 fontIndex = stylesheet.Fonts.Count() - 1;
             }
 
             // Find fill index
             int fillIndex = -1;
+            found = false;
 
             foreach (Fill f in stylesheet.Fills.Cast<Fill>())
             {
                 fillIndex++;
 
-                if (f.Equals(cfd.Fill))
-                    break;
+                if (f.OuterXml.Equals(cfd.Fill.OuterXml))
+                { found = true; break; }
             }
 
-            if (fillIndex < 0)
+            if (!found)
             {
-                stylesheet.Fills.AddChild(cfd.Fill);
+                stylesheet.Fills.AppendChild(cfd.Fill);
                 fillIndex = stylesheet.Fills.Count() - 1;
             }
 
             // Find border index
             int borderIndex = -1;
+            found = false;
 
             foreach (Border b in stylesheet.Borders.Cast<Border>())
             {
                 borderIndex++;
 
-                if (b.Equals(cfd.Border))
-                    break;
+                if (b.OuterXml.Equals(cfd.Border.OuterXml))
+                { found = true; break; }
             }
 
-            if (borderIndex < 0)
+            if (!found)
             {
-                stylesheet.Borders.AddChild(cfd.Border);
+                stylesheet.Borders.AppendChild(cfd.Border);
                 borderIndex = stylesheet.Borders.Count() - 1;
             }
 
             // Find number format index
             int numberingFormatIndex = -1;
+            found = false;
 
             if (cfd.NumberingFormat != null)
             {
@@ -250,19 +253,20 @@ namespace ExporterLogicLibrary
                 {
                     numberingFormatIndex++;
 
-                    if (nf.Equals(cfd.NumberingFormat))
-                        break;
+                    if (nf.OuterXml.Equals(cfd.NumberingFormat.OuterXml))
+                    { found = true; break; }
                 }
 
-                if (numberingFormatIndex < 0)
+                if (!found)
                 {
-                    stylesheet.NumberingFormats.AddChild(cfd.NumberingFormat);
+                    stylesheet.NumberingFormats.AppendChild(cfd.NumberingFormat);
                     numberingFormatIndex = stylesheet.NumberingFormats.Count() - 1;
                 }
             }
 
             // Find cell format index
             int cellFormatIndex = -1;
+            found = false;
 
             foreach (CellFormat cf in stylesheet.CellFormats.Cast<CellFormat>())
             {
@@ -275,13 +279,14 @@ namespace ExporterLogicLibrary
                     (cf.ApplyBorder != null && cf.ApplyBorder == cfd.ApplyBorder) &&
                     (cf.NumberFormatId != null && cf.NumberFormatId == (uint)numberingFormatIndex))
                 {
+                    found = true;
                     break;
                 }
             }
 
-            if (cellFormatIndex < 0)
+            if (!found)
             {
-                stylesheet.CellFormats.AddChild(new CellFormat
+                stylesheet.CellFormats.AppendChild(new CellFormat
                 {
                     FontId = (uint)fontIndex,
                     FillId = (uint)fillIndex,
@@ -291,12 +296,6 @@ namespace ExporterLogicLibrary
                     NumberFormatId = (uint)numberingFormatIndex
                 });
                 cellFormatIndex = stylesheet.CellFormats.Count() - 1;
-            }
-
-            if (!s.WorkbookPart.WorkbookStylesPart.Stylesheet.Equals(stylesheet))
-            {
-                s.WorkbookPart.WorkbookStylesPart.Stylesheet = stylesheet;
-                s.WorkbookPart.WorkbookStylesPart.Stylesheet.Save();
             }
 
             return (uint)cellFormatIndex;

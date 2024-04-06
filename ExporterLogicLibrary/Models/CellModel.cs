@@ -6,6 +6,7 @@ namespace ExporterLogicLibrary.Models
     {
         public required string Type { get; set; }
         public required string Value { get; set; }
+        public CellFormatDefinition? FormatDefinition { get; set; } = null;
         public CellValues CellValueDataType
         {
             get
@@ -42,14 +43,11 @@ namespace ExporterLogicLibrary.Models
                 };
             }
         }
-        public uint CellValueStyleIndex
+        public CellFormatDefinition CellFormatDefintion
         {
             get
             {
-                return CellValueDataType switch
-                {
-                    _ => 2
-                };
+                return FormatDefinition ?? new CellFormatDefinition();
             }
         }
     }
