@@ -6,7 +6,7 @@ namespace ExporterLogicLibrary.Models
     {
         public required string Type { get; set; }
         public required string Value { get; set; }
-        public CellFormatDefinition? FormatDefinition { get; set; } = null;
+        public CellFormatDefinition FormatDefinition { get; set; } = new();
         public CellValues CellValueDataType
         {
             get
@@ -47,6 +47,26 @@ namespace ExporterLogicLibrary.Models
         {
             get
             {
+                if (FormatDefinition != null)
+                {
+                    if (CellValueDataType == CellValues.Boolean)
+                    {
+                        FormatDefinition.NumberingFormat = new() { FormatCode = "LOGICAL" };
+                    }
+                    else if (CellValueDataType == CellValues.Number)
+                    {
+                        FormatDefinition.NumberingFormat = new() { FormatCode = "#,##0.00" };
+                    }
+                    else if (CellValueDataType == CellValues.Date)
+                    {
+                        FormatDefinition.NumberingFormat = new() { FormatCode = "mm-dd-yy" };
+                    }
+                    else
+                    {
+                        FormatDefinition.NumberingFormat = new() { FormatCode = "@" };
+                    }
+                }
+
                 return FormatDefinition ?? new CellFormatDefinition();
             }
         }
