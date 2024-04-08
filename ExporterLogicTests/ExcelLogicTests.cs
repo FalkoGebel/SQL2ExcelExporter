@@ -132,11 +132,11 @@ namespace ExporterLogicTests
             string baseSheet = "Only Text Data";
             List<string> headerFields = ["col 1", "col 2", "col 3", "col 4", "col 5"];
             List<CellModel> dataFields = [
-                new CellModel() { Type = "Int", Value = "2" },
-                new CellModel() { Type = "Int", Value = "5" },
-                new CellModel() { Type = "Int", Value = "6" },
-                new CellModel() { Type = "Int", Value = "99" },
-                new CellModel() { Type = "Int", Value = "1" }];
+                new CellModel() { Type = "int", Value = "2" },
+                new CellModel() { Type = "int", Value = "5" },
+                new CellModel() { Type = "int", Value = "6" },
+                new CellModel() { Type = "int", Value = "99" },
+                new CellModel() { Type = "int", Value = "1" }];
 
             SpreadsheetDocument s = ExcelLogic.CreateSpreadsheetDocument(fileName, baseSheet);
             s.SaveAndClose();
@@ -154,17 +154,17 @@ namespace ExporterLogicTests
             string baseSheet = "Only Text Data";
             List<string> headerFields = ["col 1", "col 2", "col 3", "col 4", "col 5"];
             List<CellModel> dataFields = [
-                new CellModel() { Type = "Int", Value = "2" },
-                new CellModel() { Type = "Int", Value = "5" },
-                new CellModel() { Type = "Int", Value = "6" },
-                new CellModel() { Type = "Int", Value = "99" },
-                new CellModel() { Type = "Int", Value = "1" }];
+                new CellModel() { Type = "int", Value = "2" },
+                new CellModel() { Type = "int", Value = "5" },
+                new CellModel() { Type = "int", Value = "6" },
+                new CellModel() { Type = "int", Value = "99" },
+                new CellModel() { Type = "int", Value = "1" }];
             List<CellModel> dataFields2 = [
-                new CellModel() { Type = "Int", Value = "4" },
-                new CellModel() { Type = "Int", Value = "54" },
-                new CellModel() { Type = "Int", Value = "634" },
-                new CellModel() { Type = "Int", Value = "100" },
-                new CellModel() { Type = "Int", Value = "7" }];
+                new CellModel() { Type = "int", Value = "4" },
+                new CellModel() { Type = "int", Value = "54" },
+                new CellModel() { Type = "int", Value = "634" },
+                new CellModel() { Type = "int", Value = "100" },
+                new CellModel() { Type = "int", Value = "7" }];
 
             SpreadsheetDocument s = ExcelLogic.CreateSpreadsheetDocument(fileName, baseSheet);
             s.SaveAndClose();

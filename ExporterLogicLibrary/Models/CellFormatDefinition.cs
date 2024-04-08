@@ -56,10 +56,111 @@ namespace ExporterLogicLibrary.Models
                 return font;
             }
         }
-        public Fill Fill { get; set; } = new Fill(new PatternFill() { PatternType = PatternValues.None });
-        public bool ApplyFill { get; set; } = false;
-        public Border Border { get; set; } = new Border();
-        public bool ApplyBorder { get; set; } = false;
+        public System.Drawing.Color? FillColor { get; set; } = null;
+        public Fill Fill
+        {
+            get
+            {
+                if (FillColor != null)
+                    return new Fill(new PatternFill(
+                        new ForegroundColor()
+                        {
+                            Rgb = new HexBinaryValue()
+                            {
+                                Value = ColorTranslator.ToHtml(
+                                    System.Drawing.Color.FromArgb(
+                                        ((System.Drawing.Color)FillColor).A,
+                                        ((System.Drawing.Color)FillColor).R,
+                                        ((System.Drawing.Color)FillColor).G,
+                                        ((System.Drawing.Color)FillColor).B)).Replace("#", "")
+                            }
+                        })
+                    { PatternType = PatternValues.Solid });
+
+                return new Fill(new PatternFill() { PatternType = PatternValues.None });
+            }
+        }
+        public bool ApplyFill
+        {
+            get
+            {
+                return FillColor != null;
+            }
+        }
+        public System.Drawing.Color? BorderColor { get; set; } = null;
+        public bool BorderThick { get; set; } = false;
+        public Border Border
+        {
+            get
+            {
+                if (BorderColor != null)
+                {
+                    return new Border(
+                        new LeftBorder(new DocumentFormat.OpenXml.Spreadsheet.Color()
+                        {
+                            Rgb = new HexBinaryValue()
+                            {
+                                Value = ColorTranslator.ToHtml(
+                                            System.Drawing.Color.FromArgb(
+                                                ((System.Drawing.Color)BorderColor).A,
+                                                ((System.Drawing.Color)BorderColor).R,
+                                                ((System.Drawing.Color)BorderColor).G,
+                                                ((System.Drawing.Color)BorderColor).B)).Replace("#", "")
+                            }
+                        })
+                        { Style = BorderThick ? BorderStyleValues.Thick : BorderStyleValues.Thin },
+                        new RightBorder(new DocumentFormat.OpenXml.Spreadsheet.Color()
+                        {
+                            Rgb = new HexBinaryValue()
+                            {
+                                Value = ColorTranslator.ToHtml(
+                                            System.Drawing.Color.FromArgb(
+                                                ((System.Drawing.Color)BorderColor).A,
+                                                ((System.Drawing.Color)BorderColor).R,
+                                                ((System.Drawing.Color)BorderColor).G,
+                                                ((System.Drawing.Color)BorderColor).B)).Replace("#", "")
+                            }
+                        })
+                        { Style = BorderThick ? BorderStyleValues.Thick : BorderStyleValues.Thin },
+                        new TopBorder(new DocumentFormat.OpenXml.Spreadsheet.Color()
+                        {
+                            Rgb = new HexBinaryValue()
+                            {
+                                Value = ColorTranslator.ToHtml(
+                                        System.Drawing.Color.FromArgb(
+                                            ((System.Drawing.Color)BorderColor).A,
+                                            ((System.Drawing.Color)BorderColor).R,
+                                            ((System.Drawing.Color)BorderColor).G,
+                                            ((System.Drawing.Color)BorderColor).B)).Replace("#", "")
+                            }
+                        })
+                        { Style = BorderThick ? BorderStyleValues.Thick : BorderStyleValues.Thin },
+                        new BottomBorder(new DocumentFormat.OpenXml.Spreadsheet.Color()
+                        {
+                            Rgb = new HexBinaryValue()
+                            {
+                                Value = ColorTranslator.ToHtml(
+                                        System.Drawing.Color.FromArgb(
+                                            ((System.Drawing.Color)BorderColor).A,
+                                            ((System.Drawing.Color)BorderColor).R,
+                                            ((System.Drawing.Color)BorderColor).G,
+                                            ((System.Drawing.Color)BorderColor).B)).Replace("#", "")
+                            }
+                        })
+                        { Style = BorderThick ? BorderStyleValues.Thick : BorderStyleValues.Thin },
+                        new DiagonalBorder());
+                }
+
+                return new Border();
+            }
+        }
+        public bool ApplyBorder
+        {
+            get
+            {
+                return BorderColor != null;
+            }
+        }
         public NumberingFormat? NumberingFormat { get; set; } = null;
     }
 }
