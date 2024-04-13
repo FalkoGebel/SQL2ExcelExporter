@@ -250,6 +250,15 @@ namespace Sql2ExcelExporterUI.Properties {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Supported ähnelt.
+        /// </summary>
+        public static string MW_TLV_HEADER_SUPPORTED {
+            get {
+                return ResourceManager.GetString("MW_TLV_HEADER_SUPPORTED", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Type ähnelt.
         /// </summary>
         public static string MW_TLV_HEADER_TYPE {

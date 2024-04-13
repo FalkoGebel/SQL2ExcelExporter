@@ -32,13 +32,20 @@
         <TextBox Grid.Row="2" Grid.Column="1" x:Name="TableTextBox" VerticalAlignment="Center" Margin="5" IsReadOnly="True" Background="{DynamicResource {x:Static SystemColors.ScrollBarBrushKey}}" TextChanged="TableTextBox_TextChanged"/>
         <Button Grid.Row="2" Grid.Column="2" Content="{x:Static p:Resources.MW_ASSIST_BUTTON_CONTENT}" x:Name="TableAssistButton" VerticalAlignment="Center" Margin="0,0,5,0" Padding="5,0" Click="TableAssistButton_Click"/>
         <Label Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="3" Content="{x:Static p:Resources.MW_COLUMNS_LABEL}" VerticalAlignment="Center" Margin="5,5,5,0"/>
-        <ListView Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="3" x:Name="ColumnsListView" Margin="5,0,5,0">
+        <ListView Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="3" x:Name="ColumnsListView" Margin="5,0,5,0" VerticalAlignment="Top">
             <ListView.View>
-                <GridView>
+                <GridView AllowsColumnReorder="False">
+                    <GridViewColumn Header="{x:Static p:Resources.MW_TLV_HEADER_SUPPORTED}">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <CheckBox Margin="5,0" IsChecked="{Binding Supported}" IsEnabled="False"/>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
                     <GridViewColumn Header="{x:Static p:Resources.MW_TLV_HEADER_SELECTED}">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
-                                <CheckBox Margin="5,0" IsChecked="{Binding Selected}"/>
+                                <CheckBox Margin="5,0" IsChecked="{Binding Selected}" IsEnabled="{Binding Supported}"/>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
