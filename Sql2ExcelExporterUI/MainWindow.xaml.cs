@@ -59,7 +59,7 @@ namespace Sql2ExcelExporterUI
                 if (ServerTextBox.Text != string.Empty && DatabaseTextBox.Text != string.Empty && TableTextBox.Text != string.Empty)
                 {
                     foreach (ColumnModel col in SqlLogic.GetColumnsForTable(ServerTextBox.Text, DatabaseTextBox.Text, TableTextBox.Text).OrderBy(cm => cm.Name))
-                        _columns.Add(new ColumnsListViewModel() { Name = col.Name, Selected = true, Type = col.Type });
+                        _columns.Add(new ColumnsListViewModel() { Supported = col.Type.FormatCode() != string.Empty, Selected = col.Type.FormatCode() != string.Empty, Name = col.Name, Type = col.Type });
                 }
             }
 
@@ -97,7 +97,7 @@ namespace Sql2ExcelExporterUI
         private void SelectAllListViewColumns()
         {
             foreach (var column in _columns)
-                column.Selected = true;
+                column.Selected = column.Supported;
 
             UpdateColumnsListView(false);
         }

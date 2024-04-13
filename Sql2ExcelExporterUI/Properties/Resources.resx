@@ -180,6 +180,9 @@
   <data name="MW_TLV_HEADER_SELECTED" xml:space="preserve">
     <value>Selected</value>
   </data>
+  <data name="MW_TLV_HEADER_SUPPORTED" xml:space="preserve">
+    <value>Supported</value>
+  </data>
   <data name="MW_TLV_HEADER_TYPE" xml:space="preserve">
     <value>Type</value>
   </data>

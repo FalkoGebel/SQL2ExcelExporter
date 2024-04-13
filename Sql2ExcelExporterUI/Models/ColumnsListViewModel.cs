@@ -2,7 +2,8 @@
 {
     public class ColumnsListViewModel
     {
-        public bool Selected { get; set; }
+        public required bool Supported { get; set; }
+        public required bool Selected { get; set; }
         public required string Name { get; set; }
         public required string Type { get; set; }
     }

@@ -15,6 +15,7 @@ namespace ExporterLogicLibrary.Models
                 {
                     // Exact numerics -> Boolean
                     "bit" => CellValues.Boolean,
+                    "tinyint" => CellValues.Boolean,
 
                     // Exact numerics -> Number
                     "bigint" => CellValues.Number,
@@ -24,7 +25,6 @@ namespace ExporterLogicLibrary.Models
                     "numeric" => CellValues.Number,
                     "smallint" => CellValues.Number,
                     "smallmoney" => CellValues.Number,
-                    "tinyint" => CellValues.Number,
 
                     // Approximate numerics -> Number
                     "float" => CellValues.Number,
@@ -49,22 +49,7 @@ namespace ExporterLogicLibrary.Models
             {
                 if (FormatDefinition != null)
                 {
-                    if (CellValueDataType == CellValues.Boolean)
-                    {
-                        FormatDefinition.NumberingFormat = new() { FormatCode = "LOGICAL" };
-                    }
-                    else if (CellValueDataType == CellValues.Number)
-                    {
-                        FormatDefinition.NumberingFormat = new() { FormatCode = "#,##0.00" };
-                    }
-                    else if (CellValueDataType == CellValues.Date)
-                    {
-                        FormatDefinition.NumberingFormat = new() { FormatCode = "mm-dd-yy" };
-                    }
-                    else
-                    {
-                        FormatDefinition.NumberingFormat = new() { FormatCode = "@" };
-                    }
+                    FormatDefinition.NumberingFormat = new() { FormatCode = Type.FormatCode() };
                 }
 
                 return FormatDefinition ?? new CellFormatDefinition();
