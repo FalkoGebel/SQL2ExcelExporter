@@ -39,7 +39,12 @@ namespace ExporterLogicLibrary
                 {
                     List<CellModel> line = [];
                     for (int i = 0; i < reader.FieldCount; i++)
-                        line.Add(new CellModel() { Type = columns[i].Type, Value = $"{reader[i]}" });
+                    {
+                        if (reader[i] is byte[] v)
+                            line.Add(new CellModel() { Type = columns[i].Type, Value = $"0x{BitConverter.ToString(v).Replace("-", "")}" });
+                        else
+                            line.Add(new CellModel() { Type = columns[i].Type, Value = $"{reader[i]}" });
+                    }
 
                     output.Add(line);
                 }

@@ -7,6 +7,7 @@
             return sqlDataType switch
             {
                 "bit" => "BOOLEAN",
+                "decimal" => "#,##0.00",
                 "int" => "0",
                 "money" => "#,##0.00",
                 "float" => "#,##0.00",
@@ -14,14 +15,13 @@
 
                 // Not checked yet
                 "bigint" => "",
-                "decimal" => "",
                 "numeric" => "",
                 "smallint" => "",
                 "smallmoney" => "",
                 "real" => "",
                 "date" => "",
-                "datetime2" => "",
                 "datetime" => "",
+                "datetime2" => "",
                 "datetimeoffset" => "",
                 "smalldatetime" => "",
                 "time" => "",
