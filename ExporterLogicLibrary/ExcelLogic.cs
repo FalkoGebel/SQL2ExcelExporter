@@ -57,6 +57,8 @@ namespace ExporterLogicLibrary
             return output;
         }
 
+        // TODO (performance) - the insert line function should work with a list of lists, so that all lines can be inserted
+        // within one call and all the overhead work is done only once per data set
         private static void InsertLine(SpreadsheetDocument s, string sheetName, List<CellModel> fields)
         {
             if (sheetName == "")

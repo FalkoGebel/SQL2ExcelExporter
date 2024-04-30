@@ -175,5 +175,56 @@ namespace ExporterLogicTests
             s.SaveAndClose();
             File.Exists(fileName).Should().BeTrue();
         }
+
+        [TestMethod]
+        [DataRow(1)]
+        [DataRow(10)]
+        [DataRow(100)]
+        //[DataRow(1000)] // 10.5 seconds
+        //[DataRow(10000)] // 12.5 minutes
+        public void CreateExcelFileInsertHeaderAndTwoDataLinesOnlyNumbersAndExistsWithGivenNumberOfColumns(int numberOfColumns)
+        {
+            string fileName = _testPath + $"\\NumberOfColumns_{numberOfColumns}.xlsx";
+            string baseSheet = "Only Text Data";
+            List<string> headerFields = Enumerable.Range(1, numberOfColumns).Select(i => $"col {i}").ToList();
+            List<CellModel> dataFields =
+                Enumerable.Range(1, numberOfColumns).Select(i => new CellModel() { Type = "int", Value = $"{i}" }).ToList();
+            List<CellModel> dataFields2 =
+                Enumerable.Range(1, numberOfColumns).Select(i => new CellModel() { Type = "int", Value = $"{2 * i}" }).ToList();
+
+            SpreadsheetDocument s = ExcelLogic.CreateSpreadsheetDocument(fileName, baseSheet);
+            s.SaveAndClose();
+            s = ExcelLogic.OpenSpreadsheetDocument(fileName);
+            ExcelLogic.InsertHeaderLine(s, baseSheet, headerFields);
+            ExcelLogic.InsertDataLine(s, baseSheet, dataFields);
+            ExcelLogic.InsertDataLine(s, baseSheet, dataFields2);
+            s.SaveAndClose();
+            File.Exists(fileName).Should().BeTrue();
+        }
+
+        [TestMethod]
+        [DataRow(30, 1)]
+        [DataRow(30, 10)]
+        //[DataRow(30, 100)] // 10.8 seconds
+        //[DataRow(30, 1000)] // 14 minutes
+        //[DataRow(30, 10000)] // unfinished
+        public void CreateExcelFileInsertHeaderAndTwoDataLinesOnlyNumbersAndExistsWithGivenNumberOfColumnsAndRows(int numberOfColumns, int numberOfRows)
+        {
+            string fileName = _testPath + $"\\NumberOfColumns_{numberOfColumns}_AndRows_{numberOfRows}.xlsx";
+            string baseSheet = "Only Text Data";
+            List<string> headerFields = Enumerable.Range(1, numberOfColumns).Select(i => $"col {i}").ToList();
+            List<List<CellModel>> dataFields =
+                Enumerable.Range(1, numberOfRows)
+                          .Select(r => Enumerable.Range(1, numberOfColumns)
+                                                 .Select(c => new CellModel() { Type = "int", Value = $"{r * c}" }).ToList()).ToList();
+            SpreadsheetDocument s = ExcelLogic.CreateSpreadsheetDocument(fileName, baseSheet);
+            s.SaveAndClose();
+            s = ExcelLogic.OpenSpreadsheetDocument(fileName);
+            ExcelLogic.InsertHeaderLine(s, baseSheet, headerFields);
+            foreach (List<CellModel> row in dataFields)
+                ExcelLogic.InsertDataLine(s, baseSheet, row);
+            s.SaveAndClose();
+            File.Exists(fileName).Should().BeTrue();
+        }
     }
 }
