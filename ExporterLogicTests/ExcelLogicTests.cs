@@ -103,7 +103,7 @@ namespace ExporterLogicTests
             SpreadsheetDocument s = ExcelLogic.CreateSpreadsheetDocument(fileName, baseSheet);
             s.SaveAndClose();
             s = ExcelLogic.OpenSpreadsheetDocument(fileName);
-            ExcelLogic.InsertDataLine(s, baseSheet, dataFields.Select(f => new CellModel() { Type = "string", Value = f }).ToList());
+            ExcelLogic.InsertDataLines(s, baseSheet, [dataFields.Select(f => new CellModel() { Type = "string", Value = f }).ToList()]);
             s.SaveAndClose();
             File.Exists(fileName).Should().BeTrue();
         }
@@ -120,7 +120,7 @@ namespace ExporterLogicTests
             s.SaveAndClose();
             s = ExcelLogic.OpenSpreadsheetDocument(fileName);
             ExcelLogic.InsertHeaderLine(s, baseSheet, headerFields);
-            ExcelLogic.InsertDataLine(s, baseSheet, dataFields.Select(f => new CellModel() { Type = "string", Value = f }).ToList());
+            ExcelLogic.InsertDataLines(s, baseSheet, [dataFields.Select(f => new CellModel() { Type = "string", Value = f }).ToList()]);
             s.SaveAndClose();
             File.Exists(fileName).Should().BeTrue();
         }
@@ -142,7 +142,7 @@ namespace ExporterLogicTests
             s.SaveAndClose();
             s = ExcelLogic.OpenSpreadsheetDocument(fileName);
             ExcelLogic.InsertHeaderLine(s, baseSheet, headerFields);
-            ExcelLogic.InsertDataLine(s, baseSheet, dataFields);
+            ExcelLogic.InsertDataLines(s, baseSheet, [dataFields]);
             s.SaveAndClose();
             File.Exists(fileName).Should().BeTrue();
         }
@@ -170,8 +170,8 @@ namespace ExporterLogicTests
             s.SaveAndClose();
             s = ExcelLogic.OpenSpreadsheetDocument(fileName);
             ExcelLogic.InsertHeaderLine(s, baseSheet, headerFields);
-            ExcelLogic.InsertDataLine(s, baseSheet, dataFields);
-            ExcelLogic.InsertDataLine(s, baseSheet, dataFields2);
+            ExcelLogic.InsertDataLines(s, baseSheet, [dataFields]);
+            ExcelLogic.InsertDataLines(s, baseSheet, [dataFields2]);
             s.SaveAndClose();
             File.Exists(fileName).Should().BeTrue();
         }
@@ -196,8 +196,8 @@ namespace ExporterLogicTests
             s.SaveAndClose();
             s = ExcelLogic.OpenSpreadsheetDocument(fileName);
             ExcelLogic.InsertHeaderLine(s, baseSheet, headerFields);
-            ExcelLogic.InsertDataLine(s, baseSheet, dataFields);
-            ExcelLogic.InsertDataLine(s, baseSheet, dataFields2);
+            ExcelLogic.InsertDataLines(s, baseSheet, [dataFields]);
+            ExcelLogic.InsertDataLines(s, baseSheet, [dataFields2]);
             s.SaveAndClose();
             File.Exists(fileName).Should().BeTrue();
         }
@@ -205,12 +205,12 @@ namespace ExporterLogicTests
         [TestMethod]
         [DataRow(30, 1)]
         [DataRow(30, 10)]
-        //[DataRow(30, 100)] // 10.8 seconds
-        //[DataRow(30, 1000)] // 14 minutes
-        //[DataRow(30, 10000)] // unfinished
-        public void CreateExcelFileInsertHeaderAndTwoDataLinesOnlyNumbersAndExistsWithGivenNumberOfColumnsAndRows(int numberOfColumns, int numberOfRows)
+        //[DataRow(30, 100)] // 10.7 seconds
+        //[DataRow(30, 200)] // 32.2 seconds
+        //[DataRow(30, 300)] // 1.2 minutes
+        public void CreateExcelFileInsertHeaderAndGivenNumberOfDataLinesAsListOnlyNumbersAndExistsWithGivenNumberOfColumns(int numberOfColumns, int numberOfRows)
         {
-            string fileName = _testPath + $"\\NumberOfColumns_{numberOfColumns}_AndRows_{numberOfRows}.xlsx";
+            string fileName = _testPath + $"\\NumberOfColumns_{numberOfColumns}_AndRows_{numberOfRows}_InsertLines.xlsx";
             string baseSheet = "Only Text Data";
             List<string> headerFields = Enumerable.Range(1, numberOfColumns).Select(i => $"col {i}").ToList();
             List<List<CellModel>> dataFields =
@@ -221,8 +221,8 @@ namespace ExporterLogicTests
             s.SaveAndClose();
             s = ExcelLogic.OpenSpreadsheetDocument(fileName);
             ExcelLogic.InsertHeaderLine(s, baseSheet, headerFields);
-            foreach (List<CellModel> row in dataFields)
-                ExcelLogic.InsertDataLine(s, baseSheet, row);
+            //foreach (List<CellModel> row in dataFields)
+            ExcelLogic.InsertDataLines(s, baseSheet, dataFields);
             s.SaveAndClose();
             File.Exists(fileName).Should().BeTrue();
         }

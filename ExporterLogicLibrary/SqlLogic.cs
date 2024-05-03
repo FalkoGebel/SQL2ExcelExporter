@@ -42,6 +42,11 @@ namespace ExporterLogicLibrary
                     {
                         if (reader[i] is byte[] v)
                             line.Add(new CellModel() { Type = columns[i].Type, Value = $"0x{BitConverter.ToString(v).Replace("-", "")}" });
+                        else if (reader[i] is DateTime)
+                        {
+                            DateTime dt = reader.GetDateTime(i);
+                            line.Add(new CellModel() { Type = columns[i].Type, Value = $"{dt:yyyy-MM-dd HH:mm:ss.fff}" });
+                        }
                         else
                             line.Add(new CellModel() { Type = columns[i].Type, Value = $"{reader[i]}" });
                     }
