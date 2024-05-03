@@ -38,11 +38,8 @@ namespace ExporterLogicLibrary.Models
                     "smalldatetime" => CellValues.Date,
                     "time" => CellValues.Date,
 
-                    // TODO (performance) - according to MS String should be used for formulas in cells
-                    // check, if default text values should be set to InlineString
-
                     // Default -> String
-                    _ => CellValues.String
+                    _ => CellValues.InlineString
                 };
             }
         }

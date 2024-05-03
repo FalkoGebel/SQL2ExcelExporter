@@ -57,9 +57,7 @@ namespace ExporterLogicLibrary
             return output;
         }
 
-        // TODO (performance) - the insert line function should work with a list of lists, so that all lines can be inserted
-        // within one call and all the overhead work is done only once per data set
-        private static void InsertLine(SpreadsheetDocument s, string sheetName, List<CellModel> fields)
+        private static void InsertLines(SpreadsheetDocument s, string sheetName, List<List<CellModel>> lines)
         {
             if (sheetName == "")
                 throw new ArgumentException(Properties.Resources.EXCEPTION_MISSING_SHEET_NAME);
@@ -70,23 +68,32 @@ namespace ExporterLogicLibrary
                 ?? throw new ArgumentException(Properties.Resources.EXCEPTION_INVALID_SHEET_NAME.Replace("{SHEET_NAME}", sheetName));
             WorksheetPart worksheetPart = workbookPart.GetPartById(sheet.Id) as WorksheetPart;
             SheetData sheetData = worksheetPart.Worksheet.Elements<SheetData>().FirstOrDefault();
-            Row lastRow = worksheetPart.Worksheet.Descendants<Row>().LastOrDefault();
-            Row row = new()
-            {
-                RowIndex = lastRow == null ? 1 : lastRow.RowIndex + 1
-            };
 
-            for (int i = 0; i < fields.Count; i++)
+            Row lastRow = worksheetPart.Worksheet.Descendants<Row>().LastOrDefault() ?? new Row();
+            uint idx = lastRow.RowIndex ?? 0;
+
+            List<Row> rows = [];
+
+            foreach (List<CellModel> fields in lines)
             {
-                row.Append(
-                    GetNewCell(
-                        fields[i].CellValueDataType,
-                        GetExcelColumnName(i) + row.RowIndex,
-                        fields[i].Value,
-                        s.GetStyleIndex(fields[i].CellFormatDefintion)));
+                idx++;
+                Row row = new()
+                {
+                    RowIndex = idx
+                };
+                for (int i = 0; i < fields.Count; i++)
+                {
+                    row.Append(
+                        GetNewCell(
+                            fields[i].CellValueDataType,
+                            GetExcelColumnName(i) + row.RowIndex,
+                            fields[i].Value,
+                            s.GetStyleIndex(fields[i].CellFormatDefintion)));
+                }
+                rows.Add(row);
             }
 
-            sheetData.Append(row);
+            sheetData.Append(rows);
         }
 
         private static string GetExcelColumnName(int columnIndex)
@@ -111,15 +118,24 @@ namespace ExporterLogicLibrary
                 DataType = dataType,
                 CellReference = cellReference,
                 StyleIndex = styleIndex,
-                CellValue = new CellValue(cellValue)
             };
+
+            if (cell.DataType == CellValues.InlineString)
+            {
+                InlineString inlineString = new();
+                Text cellValueText = new() { Text = cellValue };
+                inlineString.AppendChild(cellValueText);
+                cell.AppendChild(inlineString);
+            }
+            else
+                cell.CellValue = new CellValue(cellValue);
 
             return cell;
         }
 
-        public static void InsertDataLine(SpreadsheetDocument s, string baseSheet, List<CellModel> dataFields)
+        public static void InsertDataLines(SpreadsheetDocument s, string baseSheet, List<List<CellModel>> dataFields)
         {
-            InsertLine(s, baseSheet, dataFields);
+            InsertLines(s, baseSheet, dataFields);
         }
 
         public static void InsertHeaderLine(SpreadsheetDocument s, string baseSheet, List<string> headerFields)
@@ -129,7 +145,7 @@ namespace ExporterLogicLibrary
                 Bold = true
             };
 
-            InsertLine(s, baseSheet, headerFields.Select(f => new CellModel() { Type = "", Value = f, FormatDefinition = cfd }).ToList());
+            InsertLines(s, baseSheet, [headerFields.Select(f => new CellModel() { Type = "", Value = f, FormatDefinition = cfd }).ToList()]);
         }
 
         private static uint GetStyleIndex(this SpreadsheetDocument s, CellFormatDefinition cfd)

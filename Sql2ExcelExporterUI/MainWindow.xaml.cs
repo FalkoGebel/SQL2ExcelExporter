@@ -162,12 +162,7 @@ namespace Sql2ExcelExporterUI
 
             SpreadsheetDocument s = ExcelLogic.CreateSpreadsheetDocument(filePath, TableTextBox.Text);
             ExcelLogic.InsertHeaderLine(s, TableTextBox.Text, selectedColumns.Select(cm => cm.Name).ToList());
-
-            foreach (List<CellModel> line in dataLines)
-            {
-                ExcelLogic.InsertDataLine(s, TableTextBox.Text, line);
-            }
-
+            ExcelLogic.InsertDataLines(s, TableTextBox.Text, dataLines);
             s.SaveAndClose();
 
             ShowInformation(Properties.Resources.MW_INFO_FILE_CREATED.Replace("{FILE_PATH}", filePath));
