@@ -226,5 +226,28 @@ namespace ExporterLogicTests
             s.SaveAndClose();
             File.Exists(fileName).Should().BeTrue();
         }
+
+        [TestMethod]
+        public void CreateExcelFileWithSheetNameAndInsertHeaderLineRedBackgroundAndWhiteItalicVerdana15PointsFontAndExists()
+        {
+            string fileName = _testPath + "\\HeaderLine_RedBackgroundAndWhiteItalicVerdana15PointsFont_Success.xlsx";
+            string baseSheet = "Sheet Name";
+            List<string> headerFields = ["col 1", "col 2", "col 3", "col 4", "col 5"];
+            CellFormatDefinition cfd = new()
+            {
+                Italic = true,
+                FontName = "Verdana",
+                FontColor = System.Drawing.Color.White,
+                FontSize = 15,
+                FillColor = System.Drawing.Color.Red,
+            };
+
+            SpreadsheetDocument s = ExcelLogic.CreateSpreadsheetDocument(fileName, baseSheet);
+            s.SaveAndClose();
+            s = ExcelLogic.OpenSpreadsheetDocument(fileName);
+            ExcelLogic.InsertHeaderLine(s, baseSheet, headerFields, cfd);
+            s.SaveAndClose();
+            File.Exists(fileName).Should().BeTrue();
+        }
     }
 }

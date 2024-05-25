@@ -138,12 +138,9 @@ namespace ExporterLogicLibrary
             InsertLines(s, baseSheet, dataFields);
         }
 
-        public static void InsertHeaderLine(SpreadsheetDocument s, string baseSheet, List<string> headerFields)
+        public static void InsertHeaderLine(SpreadsheetDocument s, string baseSheet, List<string> headerFields, CellFormatDefinition? cfd = null)
         {
-            CellFormatDefinition cfd = new()
-            {
-                Bold = true
-            };
+            cfd ??= new() { Bold = true };
 
             InsertLines(s, baseSheet, [headerFields.Select(f => new CellModel() { Type = "", Value = f, FormatDefinition = cfd }).ToList()]);
         }
