@@ -12,11 +12,18 @@ namespace Sql2ExcelExporterUI
     /// </summary>
     public partial class MainWindow : Window
     {
+        private readonly int _defaultFontSize = 12;
         private List<ColumnsListViewModel> _columns = [];
 
         public MainWindow()
         {
             InitializeComponent();
+            InitHeaderStyleFontSizeTextBox();
+        }
+
+        private void InitHeaderStyleFontSizeTextBox()
+        {
+            HeaderStyleFontSizeTextBox.Text = _defaultFontSize.ToString();
         }
 
         private void DatabaseAssistButton_Click(object sender, RoutedEventArgs e)
@@ -161,7 +168,21 @@ namespace Sql2ExcelExporterUI
             string filePath = $"{DirectoryTextBox.Text}\\{TableTextBox.Text}.xlsx";
 
             SpreadsheetDocument s = ExcelLogic.CreateSpreadsheetDocument(filePath, TableTextBox.Text);
-            ExcelLogic.InsertHeaderLine(s, TableTextBox.Text, selectedColumns.Select(cm => cm.Name).ToList());
+
+            CellFormatDefinition cellFormatDefinition = new()
+            {
+                FontName = "Arial", // TODO - user input for font name
+                FontSize = HeaderStyleFontSizeTextBox.Text != string.Empty ? int.Parse(HeaderStyleFontSizeTextBox.Text) : _defaultFontSize,
+                FontColor = System.Drawing.Color.Black, // TODO - user input for font color
+                FillColor = System.Drawing.Color.White, // TODO - user input for fill color
+                BorderColor = System.Drawing.Color.White, // TODO - user input for border color
+                BorderThick = false, // TODO - user input for border thick
+                Bold = HeaderStyleBoldCheckBox.IsChecked ?? false,
+                Italic = HeaderStyleItalicCheckBox.IsChecked ?? false,
+                Underline = HeaderStyleUnderlineCheckBox.IsChecked ?? false
+            };
+
+            ExcelLogic.InsertHeaderLine(s, TableTextBox.Text, selectedColumns.Select(cm => cm.Name).ToList(), cellFormatDefinition);
             ExcelLogic.InsertDataLines(s, TableTextBox.Text, dataLines);
             s.SaveAndClose();
 
@@ -171,6 +192,16 @@ namespace Sql2ExcelExporterUI
         private void TableTextBox_TextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e)
         {
             UpdateColumnsListView(true);
+        }
+
+        private void HeaderStyleFontSizeTextBox_TextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e)
+        {
+            string text = ((System.Windows.Controls.TextBox)e.OriginalSource).Text;
+            if (text != string.Empty)
+            {
+                if (!int.TryParse(text, out int fontSize) || fontSize <= 0 || fontSize > 100)
+                    InitHeaderStyleFontSizeTextBox();
+            }
         }
     }
 }

@@ -16,6 +16,7 @@
             <RowDefinition Height="400"/>
             <RowDefinition Height="40"/>
             <RowDefinition Height="40"/>
+            <RowDefinition/>
             <RowDefinition Height="40"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
@@ -73,6 +74,22 @@
         <Label Grid.Row="6" Grid.Column="0" Content="{x:Static p:Resources.MW_DIRECTORY_LABEL}" VerticalAlignment="Center" Margin="5"/>
         <TextBox Grid.Row="6" Grid.Column="1" x:Name="DirectoryTextBox" VerticalAlignment="Center" Margin="5" IsReadOnly="True" Background="{DynamicResource {x:Static SystemColors.ScrollBarBrushKey}}"/>
         <Button Grid.Row="6" Grid.Column="2" Content="{x:Static p:Resources.MW_ASSIST_BUTTON_CONTENT}" x:Name="DirectoryAssistButton" VerticalAlignment="Center" Margin="0,0,5,0" Padding="5,0" Click="DirectoryAssistButton_Click"/>
-        <Button Grid.Row="7" Grid.Column="0" Grid.ColumnSpan="3" Content="{x:Static p:Resources.MW_CREATE_EXCEL_FILE_BUTTON_CONTENT}" x:Name="CreateExcelFileButton" VerticalAlignment="Center" Margin="5,0,5,0" Padding="5,0" Click="CreateExcelFileButton_Click"/>
+        <StackPanel Grid.Row="7" Grid.Column="0" Grid.ColumnSpan="3" Orientation="Vertical" Margin="5" Background="#FFEDEDED">
+            <Label Content="{x:Static p:Resources.MW_HEADER_STYLE_LABEL}" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+            <Border Margin="5" BorderBrush="DarkGray" BorderThickness="1,1,1,1" CornerRadius="5,5,5,5">
+                <StackPanel Orientation="Vertical">
+                    <StackPanel Orientation="Horizontal">
+                        <CheckBox x:Name="HeaderStyleBoldCheckBox" Content="{x:Static p:Resources.MW_HS_BOLD_LABEL}" Margin="5" IsChecked="True"></CheckBox>
+                        <CheckBox x:Name="HeaderStyleItalicCheckBox" Content="{x:Static p:Resources.MW_HS_ITALIC_LABEL}" Margin="5"></CheckBox>
+                        <CheckBox x:Name="HeaderStyleUnderlineCheckBox" Content="{x:Static p:Resources.MW_HS_UNDERLINE_LABEL}" Margin="5"></CheckBox>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <Label Content="{x:Static p:Resources.MW_HS_FONT_SIZE_LABEL}" VerticalAlignment="Center" Margin="5"/>
+                        <TextBox x:Name="HeaderStyleFontSizeTextBox" VerticalAlignment="Center" Margin="5" Width="30" TextChanged="HeaderStyleFontSizeTextBox_TextChanged"/>
+                    </StackPanel>
+                </StackPanel>
+            </Border>
+        </StackPanel>
+        <Button Grid.Row="8" Grid.Column="0" Grid.ColumnSpan="3" Content="{x:Static p:Resources.MW_CREATE_EXCEL_FILE_BUTTON_CONTENT}" x:Name="CreateExcelFileButton" VerticalAlignment="Center" Margin="5,0,5,0" Padding="5,0" Click="CreateExcelFileButton_Click"/>
     </Grid>
 </Window>
