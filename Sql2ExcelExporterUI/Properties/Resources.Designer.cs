@@ -169,6 +169,51 @@ namespace Sql2ExcelExporterUI.Properties {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Header Style ähnelt.
+        /// </summary>
+        public static string MW_HEADER_STYLE_LABEL {
+            get {
+                return ResourceManager.GetString("MW_HEADER_STYLE_LABEL", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Bold ähnelt.
+        /// </summary>
+        public static string MW_HS_BOLD_LABEL {
+            get {
+                return ResourceManager.GetString("MW_HS_BOLD_LABEL", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Font Size ähnelt.
+        /// </summary>
+        public static string MW_HS_FONT_SIZE_LABEL {
+            get {
+                return ResourceManager.GetString("MW_HS_FONT_SIZE_LABEL", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Italic ähnelt.
+        /// </summary>
+        public static string MW_HS_ITALIC_LABEL {
+            get {
+                return ResourceManager.GetString("MW_HS_ITALIC_LABEL", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Underline ähnelt.
+        /// </summary>
+        public static string MW_HS_UNDERLINE_LABEL {
+            get {
+                return ResourceManager.GetString("MW_HS_UNDERLINE_LABEL", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die File &quot;{FILE_PATH}&quot; created ähnelt.
         /// </summary>
         public static string MW_INFO_FILE_CREATED {

@@ -153,6 +153,21 @@
   <data name="MW_ERROR_NO_COLUMNS_SELECTED" xml:space="preserve">
     <value>No columns selected</value>
   </data>
+  <data name="MW_HEADER_STYLE_LABEL" xml:space="preserve">
+    <value>Header Style</value>
+  </data>
+  <data name="MW_HS_BOLD_LABEL" xml:space="preserve">
+    <value>Bold</value>
+  </data>
+  <data name="MW_HS_FONT_SIZE_LABEL" xml:space="preserve">
+    <value>Font Size</value>
+  </data>
+  <data name="MW_HS_ITALIC_LABEL" xml:space="preserve">
+    <value>Italic</value>
+  </data>
+  <data name="MW_HS_UNDERLINE_LABEL" xml:space="preserve">
+    <value>Underline</value>
+  </data>
   <data name="MW_INFO_FILE_CREATED" xml:space="preserve">
     <value>File "{FILE_PATH}" created</value>
   </data>
