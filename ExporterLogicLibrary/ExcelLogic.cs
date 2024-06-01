@@ -233,7 +233,6 @@ namespace ExporterLogicLibrary
                 {
                     cfd.NumberingFormat.NumberFormatId = (uint)++numberingFormatIndex;
                     stylesheet.NumberingFormats.AppendChild(cfd.NumberingFormat);
-                    //numberingFormatIndex = stylesheet.NumberingFormats.Count() - 1;
                 }
             }
 

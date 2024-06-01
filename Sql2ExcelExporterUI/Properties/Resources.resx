@@ -159,8 +159,29 @@
   <data name="MW_HS_BOLD_LABEL" xml:space="preserve">
     <value>Bold</value>
   </data>
+  <data name="MW_HS_BORDER_COLOR_LABEL" xml:space="preserve">
+    <value>Color</value>
+  </data>
+  <data name="MW_HS_BORDER_LABEL" xml:space="preserve">
+    <value>Border:</value>
+  </data>
+  <data name="MW_HS_BORDER_THICK_LABEL" xml:space="preserve">
+    <value>Thick</value>
+  </data>
+  <data name="MW_HS_FILL_COLOR_LABEL" xml:space="preserve">
+    <value>Fill Color</value>
+  </data>
+  <data name="MW_HS_FONT_COLOR_LABEL" xml:space="preserve">
+    <value>Color</value>
+  </data>
+  <data name="MW_HS_FONT_LABEL" xml:space="preserve">
+    <value>Font:</value>
+  </data>
+  <data name="MW_HS_FONT_NAME_LABEL" xml:space="preserve">
+    <value>Name</value>
+  </data>
   <data name="MW_HS_FONT_SIZE_LABEL" xml:space="preserve">
-    <value>Font Size</value>
+    <value>Size</value>
   </data>
   <data name="MW_HS_ITALIC_LABEL" xml:space="preserve">
     <value>Italic</value>
