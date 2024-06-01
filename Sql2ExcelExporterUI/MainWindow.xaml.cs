@@ -12,13 +12,48 @@ namespace Sql2ExcelExporterUI
     /// </summary>
     public partial class MainWindow : Window
     {
+        private readonly string _defaultFontName = "Arial";
         private readonly int _defaultFontSize = 12;
+        private readonly System.Drawing.Color _defaultFontColor = System.Drawing.Color.Black;
+        private readonly System.Drawing.Color _defaultFillColor = System.Drawing.Color.White;
+        private readonly System.Drawing.Color _defaultBorderColor = System.Drawing.Color.White;
         private List<ColumnsListViewModel> _columns = [];
 
         public MainWindow()
         {
             InitializeComponent();
             InitHeaderStyleFontSizeTextBox();
+            InitHeaderStyleFontColorPickers();
+
+            HeaderStyleFontNameTextBox.Text = _defaultFontName;
+            HeaderStyleFontNameTextBox.IsEnabled = false;  // TODO - user input for font name
+        }
+
+        private void InitHeaderStyleFontColorPickers()
+        {
+            HeaderStyleFontColorPicker.SelectedColor = new System.Windows.Media.Color()
+            {
+                A = _defaultFontColor.A,
+                R = _defaultFontColor.R,
+                G = _defaultFontColor.G,
+                B = _defaultFontColor.B
+            };
+
+            HeaderStyleFillColorPicker.SelectedColor = new System.Windows.Media.Color()
+            {
+                A = _defaultFillColor.A,
+                R = _defaultFillColor.R,
+                G = _defaultFillColor.G,
+                B = _defaultFillColor.B
+            };
+
+            HeaderStyleBorderColorPicker.SelectedColor = new System.Windows.Media.Color()
+            {
+                A = _defaultBorderColor.A,
+                R = _defaultBorderColor.R,
+                G = _defaultBorderColor.G,
+                B = _defaultBorderColor.B
+            };
         }
 
         private void InitHeaderStyleFontSizeTextBox()
@@ -171,12 +206,12 @@ namespace Sql2ExcelExporterUI
 
             CellFormatDefinition cellFormatDefinition = new()
             {
-                FontName = "Arial", // TODO - user input for font name
+                FontName = HeaderStyleFontNameTextBox.Text ?? _defaultFontName,
                 FontSize = HeaderStyleFontSizeTextBox.Text != string.Empty ? int.Parse(HeaderStyleFontSizeTextBox.Text) : _defaultFontSize,
-                FontColor = System.Drawing.Color.Black, // TODO - user input for font color
-                FillColor = System.Drawing.Color.White, // TODO - user input for fill color
-                BorderColor = System.Drawing.Color.White, // TODO - user input for border color
-                BorderThick = false, // TODO - user input for border thick
+                FontColor = GetSystemDrawingColorFromColorPicker(HeaderStyleFontColorPicker) ?? _defaultFontColor,
+                FillColor = GetSystemDrawingColorFromColorPicker(HeaderStyleFillColorPicker) ?? _defaultFillColor,
+                BorderColor = GetSystemDrawingColorFromColorPicker(HeaderStyleBorderColorPicker) ?? _defaultBorderColor,
+                BorderThick = HeaderStyleBorderThickCheckBox.IsChecked ?? false,
                 Bold = HeaderStyleBoldCheckBox.IsChecked ?? false,
                 Italic = HeaderStyleItalicCheckBox.IsChecked ?? false,
                 Underline = HeaderStyleUnderlineCheckBox.IsChecked ?? false
@@ -202,6 +237,19 @@ namespace Sql2ExcelExporterUI
                 if (!int.TryParse(text, out int fontSize) || fontSize <= 0 || fontSize > 100)
                     InitHeaderStyleFontSizeTextBox();
             }
+        }
+
+        private System.Drawing.Color? GetSystemDrawingColorFromColorPicker(Xceed.Wpf.Toolkit.ColorPicker colorPicker)
+        {
+            if (colorPicker.SelectedColor == null)
+                return null;
+
+            return System.Drawing.Color.FromArgb(
+                colorPicker.SelectedColor.Value.A,
+                colorPicker.SelectedColor.Value.R,
+                colorPicker.SelectedColor.Value.G,
+                colorPicker.SelectedColor.Value.B
+            );
         }
     }
 }

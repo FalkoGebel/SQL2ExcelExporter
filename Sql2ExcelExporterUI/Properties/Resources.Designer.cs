@@ -187,7 +187,70 @@ namespace Sql2ExcelExporterUI.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Font Size ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Color ähnelt.
+        /// </summary>
+        public static string MW_HS_BORDER_COLOR_LABEL {
+            get {
+                return ResourceManager.GetString("MW_HS_BORDER_COLOR_LABEL", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Border: ähnelt.
+        /// </summary>
+        public static string MW_HS_BORDER_LABEL {
+            get {
+                return ResourceManager.GetString("MW_HS_BORDER_LABEL", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Thick ähnelt.
+        /// </summary>
+        public static string MW_HS_BORDER_THICK_LABEL {
+            get {
+                return ResourceManager.GetString("MW_HS_BORDER_THICK_LABEL", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Fill Color ähnelt.
+        /// </summary>
+        public static string MW_HS_FILL_COLOR_LABEL {
+            get {
+                return ResourceManager.GetString("MW_HS_FILL_COLOR_LABEL", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Color ähnelt.
+        /// </summary>
+        public static string MW_HS_FONT_COLOR_LABEL {
+            get {
+                return ResourceManager.GetString("MW_HS_FONT_COLOR_LABEL", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Font: ähnelt.
+        /// </summary>
+        public static string MW_HS_FONT_LABEL {
+            get {
+                return ResourceManager.GetString("MW_HS_FONT_LABEL", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Name ähnelt.
+        /// </summary>
+        public static string MW_HS_FONT_NAME_LABEL {
+            get {
+                return ResourceManager.GetString("MW_HS_FONT_NAME_LABEL", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Size ähnelt.
         /// </summary>
         public static string MW_HS_FONT_SIZE_LABEL {
             get {
