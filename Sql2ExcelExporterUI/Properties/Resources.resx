@@ -132,6 +132,18 @@
   <data name="MW_ASSIST_BUTTON_CONTENT" xml:space="preserve">
     <value>...</value>
   </data>
+  <data name="MW_BOLD_LABEL" xml:space="preserve">
+    <value>Bold</value>
+  </data>
+  <data name="MW_BORDER_COLOR_LABEL" xml:space="preserve">
+    <value>Color</value>
+  </data>
+  <data name="MW_BORDER_LABEL" xml:space="preserve">
+    <value>Border:</value>
+  </data>
+  <data name="MW_BORDER_THICK_LABEL" xml:space="preserve">
+    <value>Thick</value>
+  </data>
   <data name="MW_COLUMNS_LABEL" xml:space="preserve">
     <value>Columns:</value>
   </data>
@@ -140,6 +152,9 @@
   </data>
   <data name="MW_DATABASE_LABEL" xml:space="preserve">
     <value>Database:</value>
+  </data>
+  <data name="MW_DATA_STYLE_LABEL" xml:space="preserve">
+    <value>Data Style</value>
   </data>
   <data name="MW_DIRECTORY_LABEL" xml:space="preserve">
     <value>Directory:</value>
@@ -153,47 +168,32 @@
   <data name="MW_ERROR_NO_COLUMNS_SELECTED" xml:space="preserve">
     <value>No columns selected</value>
   </data>
-  <data name="MW_HEADER_STYLE_LABEL" xml:space="preserve">
-    <value>Header Style</value>
-  </data>
-  <data name="MW_HS_BOLD_LABEL" xml:space="preserve">
-    <value>Bold</value>
-  </data>
-  <data name="MW_HS_BORDER_COLOR_LABEL" xml:space="preserve">
-    <value>Color</value>
-  </data>
-  <data name="MW_HS_BORDER_LABEL" xml:space="preserve">
-    <value>Border:</value>
-  </data>
-  <data name="MW_HS_BORDER_THICK_LABEL" xml:space="preserve">
-    <value>Thick</value>
-  </data>
-  <data name="MW_HS_FILL_COLOR_LABEL" xml:space="preserve">
+  <data name="MW_FILL_COLOR_LABEL" xml:space="preserve">
     <value>Fill Color</value>
   </data>
-  <data name="MW_HS_FONT_COLOR_LABEL" xml:space="preserve">
+  <data name="MW_FONT_COLOR_LABEL" xml:space="preserve">
     <value>Color</value>
   </data>
-  <data name="MW_HS_FONT_LABEL" xml:space="preserve">
+  <data name="MW_FONT_LABEL" xml:space="preserve">
     <value>Font:</value>
   </data>
-  <data name="MW_HS_FONT_NAME_LABEL" xml:space="preserve">
+  <data name="MW_FONT_NAME_LABEL" xml:space="preserve">
     <value>Name</value>
   </data>
-  <data name="MW_HS_FONT_SIZE_LABEL" xml:space="preserve">
+  <data name="MW_FONT_SIZE_LABEL" xml:space="preserve">
     <value>Size</value>
   </data>
-  <data name="MW_HS_ITALIC_LABEL" xml:space="preserve">
-    <value>Italic</value>
-  </data>
-  <data name="MW_HS_UNDERLINE_LABEL" xml:space="preserve">
-    <value>Underline</value>
+  <data name="MW_HEADER_STYLE_LABEL" xml:space="preserve">
+    <value>Header Style</value>
   </data>
   <data name="MW_INFO_FILE_CREATED" xml:space="preserve">
     <value>File "{FILE_PATH}" created</value>
   </data>
   <data name="MW_INFO_TITLE" xml:space="preserve">
     <value>Information</value>
+  </data>
+  <data name="MW_ITALIC_LABEL" xml:space="preserve">
+    <value>Italic</value>
   </data>
   <data name="MW_SELECT_ALL_TABLES_BUTTON_CONTENT" xml:space="preserve">
     <value>Select All</value>
@@ -221,6 +221,9 @@
   </data>
   <data name="MW_TLV_HEADER_TYPE" xml:space="preserve">
     <value>Type</value>
+  </data>
+  <data name="MW_UNDERLINE_LABEL" xml:space="preserve">
+    <value>Underline</value>
   </data>
   <data name="TCW_TITLE" xml:space="preserve">
     <value>Choose Table</value>

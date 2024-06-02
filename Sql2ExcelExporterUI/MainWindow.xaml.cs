@@ -2,6 +2,7 @@
 using ExporterLogicLibrary;
 using ExporterLogicLibrary.Models;
 using Sql2ExcelExporterUI.Models;
+using System.Drawing.Text;
 using System.Windows;
 using System.Windows.Forms;
 
@@ -13,7 +14,8 @@ namespace Sql2ExcelExporterUI
     public partial class MainWindow : Window
     {
         private readonly string _defaultFontName = "Arial";
-        private readonly int _defaultFontSize = 12;
+        private readonly int _defaultHeaderFontSize = 12;
+        private readonly int _defaultDataFontSize = 10;
         private readonly System.Drawing.Color _defaultFontColor = System.Drawing.Color.Black;
         private readonly System.Drawing.Color _defaultFillColor = System.Drawing.Color.White;
         private readonly System.Drawing.Color _defaultBorderColor = System.Drawing.Color.White;
@@ -24,9 +26,30 @@ namespace Sql2ExcelExporterUI
             InitializeComponent();
             InitHeaderStyleFontSizeTextBox();
             InitHeaderStyleFontColorPickers();
+            InitHeaderStyleFontNameComboBoxes();
+            InitDataStyleFontSizeTextBox();
+        }
 
-            HeaderStyleFontNameTextBox.Text = _defaultFontName;
-            HeaderStyleFontNameTextBox.IsEnabled = false;  // TODO - user input for font name
+        private void InitHeaderStyleFontNameComboBoxes()
+        {
+            HeaderStyleFontNameComboBox.Items.Clear();
+            DataStyleFontNameComboBox.Items.Clear();
+            using InstalledFontCollection col = new();
+            foreach (System.Drawing.FontFamily fa in col.Families)
+            {
+                HeaderStyleFontNameComboBox.Items.Add(fa.Name);
+                DataStyleFontNameComboBox.Items.Add(fa.Name);
+            }
+
+            if (HeaderStyleFontNameComboBox.Items.Contains(_defaultFontName))
+                HeaderStyleFontNameComboBox.Text = _defaultFontName;
+            else
+                HeaderStyleFontNameComboBox.SelectedIndex = 0;
+
+            if (DataStyleFontNameComboBox.Items.Contains(_defaultFontName))
+                DataStyleFontNameComboBox.Text = _defaultFontName;
+            else
+                DataStyleFontNameComboBox.SelectedIndex = 0;
         }
 
         private void InitHeaderStyleFontColorPickers()
@@ -54,11 +77,40 @@ namespace Sql2ExcelExporterUI
                 G = _defaultBorderColor.G,
                 B = _defaultBorderColor.B
             };
+
+            DataStyleFontColorPicker.SelectedColor = new System.Windows.Media.Color()
+            {
+                A = _defaultFontColor.A,
+                R = _defaultFontColor.R,
+                G = _defaultFontColor.G,
+                B = _defaultFontColor.B
+            };
+
+            DataStyleFillColorPicker.SelectedColor = new System.Windows.Media.Color()
+            {
+                A = _defaultFillColor.A,
+                R = _defaultFillColor.R,
+                G = _defaultFillColor.G,
+                B = _defaultFillColor.B
+            };
+
+            DataStyleBorderColorPicker.SelectedColor = new System.Windows.Media.Color()
+            {
+                A = _defaultBorderColor.A,
+                R = _defaultBorderColor.R,
+                G = _defaultBorderColor.G,
+                B = _defaultBorderColor.B
+            };
         }
 
         private void InitHeaderStyleFontSizeTextBox()
         {
-            HeaderStyleFontSizeTextBox.Text = _defaultFontSize.ToString();
+            HeaderStyleFontSizeTextBox.Text = _defaultHeaderFontSize.ToString();
+        }
+
+        private void InitDataStyleFontSizeTextBox()
+        {
+            DataStyleFontSizeTextBox.Text = _defaultDataFontSize.ToString();
         }
 
         private void DatabaseAssistButton_Click(object sender, RoutedEventArgs e)
@@ -204,10 +256,10 @@ namespace Sql2ExcelExporterUI
 
             SpreadsheetDocument s = ExcelLogic.CreateSpreadsheetDocument(filePath, TableTextBox.Text);
 
-            CellFormatDefinition cellFormatDefinition = new()
+            CellFormatDefinition cellFormatDefinitionHeader = new()
             {
-                FontName = HeaderStyleFontNameTextBox.Text ?? _defaultFontName,
-                FontSize = HeaderStyleFontSizeTextBox.Text != string.Empty ? int.Parse(HeaderStyleFontSizeTextBox.Text) : _defaultFontSize,
+                FontName = HeaderStyleFontNameComboBox.Text ?? _defaultFontName,
+                FontSize = HeaderStyleFontSizeTextBox.Text != string.Empty ? int.Parse(HeaderStyleFontSizeTextBox.Text) : _defaultHeaderFontSize,
                 FontColor = GetSystemDrawingColorFromColorPicker(HeaderStyleFontColorPicker) ?? _defaultFontColor,
                 FillColor = GetSystemDrawingColorFromColorPicker(HeaderStyleFillColorPicker) ?? _defaultFillColor,
                 BorderColor = GetSystemDrawingColorFromColorPicker(HeaderStyleBorderColorPicker) ?? _defaultBorderColor,
@@ -217,7 +269,25 @@ namespace Sql2ExcelExporterUI
                 Underline = HeaderStyleUnderlineCheckBox.IsChecked ?? false
             };
 
-            ExcelLogic.InsertHeaderLine(s, TableTextBox.Text, selectedColumns.Select(cm => cm.Name).ToList(), cellFormatDefinition);
+            ExcelLogic.InsertHeaderLine(s, TableTextBox.Text, selectedColumns.Select(cm => cm.Name).ToList(), cellFormatDefinitionHeader);
+
+            CellFormatDefinition cellFormatDefinitionData = new()
+            {
+                FontName = DataStyleFontNameComboBox.Text ?? _defaultFontName,
+                FontSize = DataStyleFontSizeTextBox.Text != string.Empty ? int.Parse(DataStyleFontSizeTextBox.Text) : _defaultDataFontSize,
+                FontColor = GetSystemDrawingColorFromColorPicker(DataStyleFontColorPicker) ?? _defaultFontColor,
+                FillColor = GetSystemDrawingColorFromColorPicker(DataStyleFillColorPicker) ?? _defaultFillColor,
+                BorderColor = GetSystemDrawingColorFromColorPicker(DataStyleBorderColorPicker) ?? _defaultBorderColor,
+                BorderThick = DataStyleBorderThickCheckBox.IsChecked ?? false,
+                Bold = DataStyleBoldCheckBox.IsChecked ?? false,
+                Italic = DataStyleItalicCheckBox.IsChecked ?? false,
+                Underline = DataStyleUnderlineCheckBox.IsChecked ?? false
+            };
+
+            foreach (var dataLine in dataLines)
+                foreach (CellModel cm in dataLine)
+                    cm.FormatDefinition = cellFormatDefinitionData;
+
             ExcelLogic.InsertDataLines(s, TableTextBox.Text, dataLines);
             s.SaveAndClose();
 
@@ -250,6 +320,16 @@ namespace Sql2ExcelExporterUI
                 colorPicker.SelectedColor.Value.G,
                 colorPicker.SelectedColor.Value.B
             );
+        }
+
+        private void DataStyleFontSizeTextBox_TextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e)
+        {
+            string text = ((System.Windows.Controls.TextBox)e.OriginalSource).Text;
+            if (text != string.Empty)
+            {
+                if (!int.TryParse(text, out int fontSize) || fontSize <= 0 || fontSize > 100)
+                    InitDataStyleFontSizeTextBox();
+            }
         }
     }
 }
