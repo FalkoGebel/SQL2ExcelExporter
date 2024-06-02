@@ -106,6 +106,42 @@ namespace Sql2ExcelExporterUI.Properties {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Bold ähnelt.
+        /// </summary>
+        public static string MW_BOLD_LABEL {
+            get {
+                return ResourceManager.GetString("MW_BOLD_LABEL", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Color ähnelt.
+        /// </summary>
+        public static string MW_BORDER_COLOR_LABEL {
+            get {
+                return ResourceManager.GetString("MW_BORDER_COLOR_LABEL", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Border: ähnelt.
+        /// </summary>
+        public static string MW_BORDER_LABEL {
+            get {
+                return ResourceManager.GetString("MW_BORDER_LABEL", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Thick ähnelt.
+        /// </summary>
+        public static string MW_BORDER_THICK_LABEL {
+            get {
+                return ResourceManager.GetString("MW_BORDER_THICK_LABEL", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Columns: ähnelt.
         /// </summary>
         public static string MW_COLUMNS_LABEL {
@@ -120,6 +156,15 @@ namespace Sql2ExcelExporterUI.Properties {
         public static string MW_CREATE_EXCEL_FILE_BUTTON_CONTENT {
             get {
                 return ResourceManager.GetString("MW_CREATE_EXCEL_FILE_BUTTON_CONTENT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Data Style ähnelt.
+        /// </summary>
+        public static string MW_DATA_STYLE_LABEL {
+            get {
+                return ResourceManager.GetString("MW_DATA_STYLE_LABEL", resourceCulture);
             }
         }
         
@@ -169,110 +214,56 @@ namespace Sql2ExcelExporterUI.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Header Style ähnelt.
-        /// </summary>
-        public static string MW_HEADER_STYLE_LABEL {
-            get {
-                return ResourceManager.GetString("MW_HEADER_STYLE_LABEL", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Bold ähnelt.
-        /// </summary>
-        public static string MW_HS_BOLD_LABEL {
-            get {
-                return ResourceManager.GetString("MW_HS_BOLD_LABEL", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Color ähnelt.
-        /// </summary>
-        public static string MW_HS_BORDER_COLOR_LABEL {
-            get {
-                return ResourceManager.GetString("MW_HS_BORDER_COLOR_LABEL", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Border: ähnelt.
-        /// </summary>
-        public static string MW_HS_BORDER_LABEL {
-            get {
-                return ResourceManager.GetString("MW_HS_BORDER_LABEL", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Thick ähnelt.
-        /// </summary>
-        public static string MW_HS_BORDER_THICK_LABEL {
-            get {
-                return ResourceManager.GetString("MW_HS_BORDER_THICK_LABEL", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Fill Color ähnelt.
         /// </summary>
-        public static string MW_HS_FILL_COLOR_LABEL {
+        public static string MW_FILL_COLOR_LABEL {
             get {
-                return ResourceManager.GetString("MW_HS_FILL_COLOR_LABEL", resourceCulture);
+                return ResourceManager.GetString("MW_FILL_COLOR_LABEL", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Color ähnelt.
         /// </summary>
-        public static string MW_HS_FONT_COLOR_LABEL {
+        public static string MW_FONT_COLOR_LABEL {
             get {
-                return ResourceManager.GetString("MW_HS_FONT_COLOR_LABEL", resourceCulture);
+                return ResourceManager.GetString("MW_FONT_COLOR_LABEL", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Font: ähnelt.
         /// </summary>
-        public static string MW_HS_FONT_LABEL {
+        public static string MW_FONT_LABEL {
             get {
-                return ResourceManager.GetString("MW_HS_FONT_LABEL", resourceCulture);
+                return ResourceManager.GetString("MW_FONT_LABEL", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Name ähnelt.
         /// </summary>
-        public static string MW_HS_FONT_NAME_LABEL {
+        public static string MW_FONT_NAME_LABEL {
             get {
-                return ResourceManager.GetString("MW_HS_FONT_NAME_LABEL", resourceCulture);
+                return ResourceManager.GetString("MW_FONT_NAME_LABEL", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Size ähnelt.
         /// </summary>
-        public static string MW_HS_FONT_SIZE_LABEL {
+        public static string MW_FONT_SIZE_LABEL {
             get {
-                return ResourceManager.GetString("MW_HS_FONT_SIZE_LABEL", resourceCulture);
+                return ResourceManager.GetString("MW_FONT_SIZE_LABEL", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Italic ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Header Style ähnelt.
         /// </summary>
-        public static string MW_HS_ITALIC_LABEL {
+        public static string MW_HEADER_STYLE_LABEL {
             get {
-                return ResourceManager.GetString("MW_HS_ITALIC_LABEL", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Underline ähnelt.
-        /// </summary>
-        public static string MW_HS_UNDERLINE_LABEL {
-            get {
-                return ResourceManager.GetString("MW_HS_UNDERLINE_LABEL", resourceCulture);
+                return ResourceManager.GetString("MW_HEADER_STYLE_LABEL", resourceCulture);
             }
         }
         
@@ -291,6 +282,15 @@ namespace Sql2ExcelExporterUI.Properties {
         public static string MW_INFO_TITLE {
             get {
                 return ResourceManager.GetString("MW_INFO_TITLE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Italic ähnelt.
+        /// </summary>
+        public static string MW_ITALIC_LABEL {
+            get {
+                return ResourceManager.GetString("MW_ITALIC_LABEL", resourceCulture);
             }
         }
         
@@ -372,6 +372,15 @@ namespace Sql2ExcelExporterUI.Properties {
         public static string MW_TLV_HEADER_TYPE {
             get {
                 return ResourceManager.GetString("MW_TLV_HEADER_TYPE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Underline ähnelt.
+        /// </summary>
+        public static string MW_UNDERLINE_LABEL {
+            get {
+                return ResourceManager.GetString("MW_UNDERLINE_LABEL", resourceCulture);
             }
         }
         

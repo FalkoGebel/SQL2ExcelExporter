@@ -21,9 +21,9 @@
             <RowDefinition Height="40"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
+            <ColumnDefinition MaxWidth="100"/>
             <ColumnDefinition />
-            <ColumnDefinition Width="300"/>
-            <ColumnDefinition />
+            <ColumnDefinition MaxWidth="30"/>
         </Grid.ColumnDefinitions>
         <Label Grid.Row="0" Grid.Column="0" Content="{x:Static p:Resources.MW_SERVER_LABEL}" VerticalAlignment="Center" Margin="5"/>
         <TextBox Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" x:Name="ServerTextBox" VerticalAlignment="Center" Margin="5"/>
@@ -75,34 +75,65 @@
         <Label Grid.Row="6" Grid.Column="0" Content="{x:Static p:Resources.MW_DIRECTORY_LABEL}" VerticalAlignment="Center" Margin="5"/>
         <TextBox Grid.Row="6" Grid.Column="1" x:Name="DirectoryTextBox" VerticalAlignment="Center" Margin="5" IsReadOnly="True" Background="{DynamicResource {x:Static SystemColors.ScrollBarBrushKey}}"/>
         <Button Grid.Row="6" Grid.Column="2" Content="{x:Static p:Resources.MW_ASSIST_BUTTON_CONTENT}" x:Name="DirectoryAssistButton" VerticalAlignment="Center" Margin="0,0,5,0" Padding="5,0" Click="DirectoryAssistButton_Click"/>
-        <StackPanel Grid.Row="7" Grid.Column="0" Grid.ColumnSpan="3" Orientation="Vertical" Margin="5" Background="#FFEDEDED">
-            <Label Content="{x:Static p:Resources.MW_HEADER_STYLE_LABEL}" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="16" FontWeight="Bold"/>
-            <Border Margin="5" BorderBrush="DarkGray" BorderThickness="1,1,1,1" CornerRadius="5,5,5,5">
-                <StackPanel Orientation="Vertical">
-                    <StackPanel Orientation="Horizontal">
-                        <CheckBox x:Name="HeaderStyleBoldCheckBox" Content="{x:Static p:Resources.MW_HS_BOLD_LABEL}" Margin="5" IsChecked="True" VerticalAlignment="Center"></CheckBox>
-                        <CheckBox x:Name="HeaderStyleItalicCheckBox" Content="{x:Static p:Resources.MW_HS_ITALIC_LABEL}" Margin="5" VerticalAlignment="Center"></CheckBox>
-                        <CheckBox x:Name="HeaderStyleUnderlineCheckBox" Content="{x:Static p:Resources.MW_HS_UNDERLINE_LABEL}" Margin="5" VerticalAlignment="Center"></CheckBox>
-                        <Label Content="{x:Static p:Resources.MW_HS_FILL_COLOR_LABEL}" VerticalAlignment="Center" Margin="5,5,0,5"/>
-                        <xctk:ColorPicker x:Name="HeaderStyleFillColorPicker" Width="75" Margin="2,5,0,5" VerticalAlignment="Center"></xctk:ColorPicker>
+        <StackPanel Grid.Row="7" Grid.Column="0" Grid.ColumnSpan="3" Orientation="Horizontal" Margin="5">
+            <StackPanel Orientation="Vertical" Margin="5" Background="#FFEDEDED">
+                <Label Content="{x:Static p:Resources.MW_HEADER_STYLE_LABEL}" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="16" FontWeight="Bold"/>
+                <Border Margin="5" BorderBrush="DarkGray" BorderThickness="1,1,1,1" CornerRadius="5,5,5,5">
+                    <StackPanel Orientation="Vertical">
+                        <StackPanel Orientation="Horizontal">
+                            <CheckBox x:Name="HeaderStyleBoldCheckBox" Content="{x:Static p:Resources.MW_BOLD_LABEL}" Margin="5" IsChecked="True" VerticalAlignment="Center"></CheckBox>
+                            <CheckBox x:Name="HeaderStyleItalicCheckBox" Content="{x:Static p:Resources.MW_ITALIC_LABEL}" Margin="5" VerticalAlignment="Center"></CheckBox>
+                            <CheckBox x:Name="HeaderStyleUnderlineCheckBox" Content="{x:Static p:Resources.MW_UNDERLINE_LABEL}" Margin="5" VerticalAlignment="Center"></CheckBox>
+                            <Label Content="{x:Static p:Resources.MW_FILL_COLOR_LABEL}" VerticalAlignment="Center" Margin="5,5,0,5"/>
+                            <xctk:ColorPicker x:Name="HeaderStyleFillColorPicker" Width="75" Margin="2,5,5,5" VerticalAlignment="Center"></xctk:ColorPicker>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <Label Content="{x:Static p:Resources.MW_FONT_LABEL}" VerticalAlignment="Center" Margin="5,5,0,5" FontWeight="Bold"/>
+                            <Label Content="{x:Static p:Resources.MW_FONT_NAME_LABEL}" VerticalAlignment="Center" Margin="5,5,0,5"/>
+                            <ComboBox x:Name="HeaderStyleFontNameComboBox" VerticalAlignment="Center" Width="75" Margin="2,5,0,5"></ComboBox>
+                            <Label Content="{x:Static p:Resources.MW_FONT_SIZE_LABEL}" VerticalAlignment="Center" Margin="5,5,0,5"/>
+                            <TextBox x:Name="HeaderStyleFontSizeTextBox" VerticalAlignment="Center" Margin="2,5,0,5" Width="30" TextChanged="HeaderStyleFontSizeTextBox_TextChanged"/>
+                            <Label Content="{x:Static p:Resources.MW_FONT_COLOR_LABEL}" VerticalAlignment="Center" Margin="5,5,0,5"/>
+                            <xctk:ColorPicker x:Name="HeaderStyleFontColorPicker" Width="75" Margin="2,5,5,5" VerticalAlignment="Center"></xctk:ColorPicker>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <Label Content="{x:Static p:Resources.MW_BORDER_LABEL}" VerticalAlignment="Center" Margin="5,5,0,5" FontWeight="Bold"/>
+                            <Label Content="{x:Static p:Resources.MW_BORDER_COLOR_LABEL}" VerticalAlignment="Center" Margin="5,5,0,5"/>
+                            <xctk:ColorPicker x:Name="HeaderStyleBorderColorPicker" Width="75" Margin="2,5,5,5" VerticalAlignment="Center"></xctk:ColorPicker>
+                            <CheckBox x:Name="HeaderStyleBorderThickCheckBox" Content="{x:Static p:Resources.MW_BORDER_THICK_LABEL}" Margin="5" VerticalAlignment="Center"></CheckBox>
+                        </StackPanel>
                     </StackPanel>
-                    <StackPanel Orientation="Horizontal">
-                        <Label Content="{x:Static p:Resources.MW_HS_FONT_LABEL}" VerticalAlignment="Center" Margin="5,5,0,5" FontWeight="Bold"/>
-                        <Label Content="{x:Static p:Resources.MW_HS_FONT_NAME_LABEL}" VerticalAlignment="Center" Margin="5,5,0,5"/>
-                        <TextBox x:Name="HeaderStyleFontNameTextBox" VerticalAlignment="Center" Width="75" Margin="2,5,0,5"></TextBox>
-                        <Label Content="{x:Static p:Resources.MW_HS_FONT_SIZE_LABEL}" VerticalAlignment="Center" Margin="5,5,0,5"/>
-                        <TextBox x:Name="HeaderStyleFontSizeTextBox" VerticalAlignment="Center" Margin="2,5,0,5" Width="30" TextChanged="HeaderStyleFontSizeTextBox_TextChanged"/>
-                        <Label Content="{x:Static p:Resources.MW_HS_FONT_COLOR_LABEL}" VerticalAlignment="Center" Margin="5,5,0,5"/>
-                        <xctk:ColorPicker x:Name="HeaderStyleFontColorPicker" Width="75" Margin="2,5,0,5" VerticalAlignment="Center"></xctk:ColorPicker>
+                </Border>
+            </StackPanel>
+            <StackPanel Orientation="Vertical" Margin="5" Background="#FFEDEDED">
+                <Label Content="{x:Static p:Resources.MW_DATA_STYLE_LABEL}" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="16" FontWeight="Bold"/>
+                <Border Margin="5" BorderBrush="DarkGray" BorderThickness="1,1,1,1" CornerRadius="5,5,5,5">
+                    <StackPanel Orientation="Vertical">
+                        <StackPanel Orientation="Horizontal">
+                            <CheckBox x:Name="DataStyleBoldCheckBox" Content="{x:Static p:Resources.MW_BOLD_LABEL}" Margin="5" IsChecked="False" VerticalAlignment="Center"></CheckBox>
+                            <CheckBox x:Name="DataStyleItalicCheckBox" Content="{x:Static p:Resources.MW_ITALIC_LABEL}" Margin="5" VerticalAlignment="Center"></CheckBox>
+                            <CheckBox x:Name="DataStyleUnderlineCheckBox" Content="{x:Static p:Resources.MW_UNDERLINE_LABEL}" Margin="5" VerticalAlignment="Center"></CheckBox>
+                            <Label Content="{x:Static p:Resources.MW_FILL_COLOR_LABEL}" VerticalAlignment="Center" Margin="5,5,0,5"/>
+                            <xctk:ColorPicker x:Name="DataStyleFillColorPicker" Width="75" Margin="2,5,5,5" VerticalAlignment="Center"></xctk:ColorPicker>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <Label Content="{x:Static p:Resources.MW_FONT_LABEL}" VerticalAlignment="Center" Margin="5,5,0,5" FontWeight="Bold"/>
+                            <Label Content="{x:Static p:Resources.MW_FONT_NAME_LABEL}" VerticalAlignment="Center" Margin="5,5,0,5"/>
+                            <ComboBox x:Name="DataStyleFontNameComboBox" VerticalAlignment="Center" Width="75" Margin="2,5,0,5"></ComboBox>
+                            <Label Content="{x:Static p:Resources.MW_FONT_SIZE_LABEL}" VerticalAlignment="Center" Margin="5,5,0,5"/>
+                            <TextBox x:Name="DataStyleFontSizeTextBox" VerticalAlignment="Center" Margin="2,5,0,5" Width="30" TextChanged="DataStyleFontSizeTextBox_TextChanged"/>
+                            <Label Content="{x:Static p:Resources.MW_FONT_COLOR_LABEL}" VerticalAlignment="Center" Margin="5,5,0,5"/>
+                            <xctk:ColorPicker x:Name="DataStyleFontColorPicker" Width="75" Margin="2,5,5,5" VerticalAlignment="Center"></xctk:ColorPicker>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <Label Content="{x:Static p:Resources.MW_BORDER_LABEL}" VerticalAlignment="Center" Margin="5,5,0,5" FontWeight="Bold"/>
+                            <Label Content="{x:Static p:Resources.MW_BORDER_COLOR_LABEL}" VerticalAlignment="Center" Margin="5,5,0,5"/>
+                            <xctk:ColorPicker x:Name="DataStyleBorderColorPicker" Width="75" Margin="2,5,5,5" VerticalAlignment="Center"></xctk:ColorPicker>
+                            <CheckBox x:Name="DataStyleBorderThickCheckBox" Content="{x:Static p:Resources.MW_BORDER_THICK_LABEL}" Margin="5" VerticalAlignment="Center"></CheckBox>
+                        </StackPanel>
                     </StackPanel>
-                    <StackPanel Orientation="Horizontal">
-                        <Label Content="{x:Static p:Resources.MW_HS_BORDER_LABEL}" VerticalAlignment="Center" Margin="5,5,0,5" FontWeight="Bold"/>
-                        <Label Content="{x:Static p:Resources.MW_HS_BORDER_COLOR_LABEL}" VerticalAlignment="Center" Margin="5,5,0,5"/>
-                        <xctk:ColorPicker x:Name="HeaderStyleBorderColorPicker" Width="75" Margin="2,5,5,5" VerticalAlignment="Center"></xctk:ColorPicker>
-                        <CheckBox x:Name="HeaderStyleBorderThickCheckBox" Content="{x:Static p:Resources.MW_HS_BORDER_THICK_LABEL}" Margin="5" VerticalAlignment="Center"></CheckBox>
-                    </StackPanel>
-                </StackPanel>
-            </Border>
+                </Border>
+            </StackPanel>
         </StackPanel>
         <Button Grid.Row="8" Grid.Column="0" Grid.ColumnSpan="3" Content="{x:Static p:Resources.MW_CREATE_EXCEL_FILE_BUTTON_CONTENT}" x:Name="CreateExcelFileButton" VerticalAlignment="Center" Margin="5,0,5,0" Padding="5,0" Click="CreateExcelFileButton_Click"/>
     </Grid>
